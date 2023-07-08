@@ -1,0 +1,36 @@
+﻿<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<# 
+	// expects GenerationParams.GeneratedProperty prop
+	// expects GenerationParams.GenSettings settings
+#>
+<#if ((prop.DoNotInitialize && prop.IsCollection == false && prop.IsModel == false)
+		|| (prop.IsCommand && prop.IsReadonly == false && prop.InitializeExplicitly == false))
+	{
+		//do nothing
+	}
+	else if (prop.IsCommand || prop.IsReadonly)
+	{
+#>
+			<#= prop.Name #> = <#= prop.FieldName.Substring(1) #>;
+<#
+		if (prop.CascadeDisposeUpstream)
+		{
+			settings.Vars["eventDirection"] = "+";
+#>
+			<#@ include file="DisposeUpstream.ttinclude"#>
+<#
+		}
+	}
+	else
+	{
+#>
+			<#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single" #>Property<<#= prop.Type #>>();
+			<#= prop.Name #> = <#= prop.InitializeExplicitly ? prop.FieldName.Substring(1) : "default" #>;
+<#
+	} 
+			if (prop.CascadeDisposeDownstream)
+{
+#>
+			Disposing += _ => <#= prop.Name #>?.Dispose();
+<#}#>

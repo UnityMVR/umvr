@@ -1,0 +1,5 @@
+﻿<# 
+	// expects GenerationParams.GeneratedProperty prop
+	// expects GenerationParams.GenSettings settings
+#>
+if(<#= prop.FieldName#>.Value != null) { <#= prop.FieldName#>.Value.Disposing <#= settings.Vars["eventDirection"]#>= CascadeDispose; }

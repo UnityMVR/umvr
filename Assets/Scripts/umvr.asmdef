@@ -1,0 +1,18 @@
+{
+    "name": "pindwin.umvr",
+    "rootNamespace": "pindwin.umvr",
+    "references": [
+        "UniRx",
+        "Zenject",
+        "umvr.Development"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

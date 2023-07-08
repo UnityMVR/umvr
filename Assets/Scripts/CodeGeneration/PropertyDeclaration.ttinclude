@@ -1,0 +1,56 @@
+﻿<#
+// expects GenerationParams.GeneratedProperty prop
+if (prop.IsReadonly == false && prop.IsCommand == false)
+{
+#>
+		private <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single" #>Property<<#= prop.Type #>> <#= prop.FieldName #>;
+<#
+}
+#>
+		<#= prop.Signature #>
+		{
+<#
+if(prop.IsReadonly || prop.IsCommand) 
+{ 
+#>
+			get; <#= prop.IsReadonly ? "private" : "" #> set;
+<# 
+} 
+else if (prop.IsCollection)
+{ 
+#>
+			get => <#= prop.FieldName #>.Collection;
+			set => <#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single"#>Property<<#= prop.Type #>>(<#= prop.FieldName #>.Collection, value);
+<# 
+} 
+else
+{
+#>
+			get => <#= prop.FieldName #>.Value;
+			set
+			{
+<#
+	if (prop.CascadeDisposeUpstream)
+	{
+		settings.Vars["eventDirection"] = "-";
+#>
+				<#@ include file="DisposeUpstream.ttinclude" #>
+<#
+	}
+#>
+				<#= prop.FieldName #>.Value = value;
+<#
+	if (prop.CascadeDisposeUpstream)
+	{
+		settings.Vars["eventDirection"] = "+";
+#>
+				<#@ include file="DisposeUpstream.ttinclude" #>
+<#
+	}
+#>
+			}
+<#
+}
+#>
+		}
+

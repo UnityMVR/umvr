@@ -1,0 +1,17 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#v3.5" #>
+<#
+	GenerationParams.GenSettings settings = ((pindwin.umvr.Editor.Generation.UMVRTemplateGenerator)Host).Settings;
+	GenerationParams.GenConcreteModel model = settings.GenConcreteModel;
+	GenerationParams.GenReactor reactor = settings.GenReactor;
+#>
+using <#= reactor.Namespace #>.Generated;
+namespace <#= reactor.Namespace #>
+{
+	public partial class <#= reactor.Type #>
+	{
+		protected override void BindDataSourceImpl(<#= model.Type #> model)
+		{
+			throw new System.NotImplementedException();
+		}
+	}
+}

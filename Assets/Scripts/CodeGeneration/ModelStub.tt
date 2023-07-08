@@ -1,0 +1,36 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#v3.5" #>
+<# 
+	GenerationParams.GenSettings settings = ((pindwin.umvr.Editor.Generation.UMVRTemplateGenerator)Host).Settings;
+	GenerationParams.GenConcreteModel model = settings.GenConcreteModel;
+#>
+using pindwin.umvr.Model;
+
+namespace <#= model.Namespace #>
+{
+	<#= model.ToPartialDeclarationString() #>
+	{
+<#
+			foreach (var prop in model.Properties)
+			{
+				if(prop.CustomImplementation == false)
+				{
+					continue;
+				}
+#>
+<#@ include file="PropertyDeclaration.ttinclude"#>
+<#
+			}
+				
+			foreach (var method in model.Methods)
+			{
+#>
+		<#= method.ResolveSignature() #>
+		{
+			throw new System.NotImplementedException();
+		}
+
+<#
+			}
+#>
+	}
+}

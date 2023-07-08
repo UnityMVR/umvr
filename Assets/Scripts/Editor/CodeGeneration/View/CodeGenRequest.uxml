@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Root" style="flex-direction: row; align-items: flex-start; flex-wrap: wrap;">
+        <ui:Toggle value="false" style="flex-direction: row; align-items: center; margin-right: 5px;" />
+        <ui:Label text="FooModel" display-tooltip-when-elided="true" name="FileNameLabel" style="flex-direction: row; align-items: center;" />
+        <ui:Label text="Errors" display-tooltip-when-elided="true" name="ErrorsLabel" enable-rich-text="true" style="flex-wrap: wrap; white-space: normal; flex-direction: row-reverse; align-items: center; flex-grow: 1; justify-content: flex-start; -unity-text-align: upper-left;" />
+    </ui:VisualElement>
+</ui:UXML>

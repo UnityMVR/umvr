@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <uie:PropertyField name="TemplateProperty" binding-path="_usedTemplate" label="Template Set" />
+    <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="ModelTypeDropdown" binding-path="SelectedTypeString" style="flex-shrink: 1; width: auto;" />
+    <ui:VisualElement name="DetailsGroup" style="display: none;">
+        <ui:Label text="Singleton" display-tooltip-when-elided="true" name="SingletonLabel" />
+        <ui:VisualElement name="ConstructorGroup" style="flex-direction: row;">
+            <ui:Label text="Constructor:" display-tooltip-when-elided="true" />
+            <ui:Label text="()" display-tooltip-when-elided="true" name="ConstructorParameters" />
+        </ui:VisualElement>
+        <ui:Foldout text="Properties" name="PropertiesGroup" />
+        <ui:Foldout text="Methods" name="MethodsGroup" value="true" />
+    </ui:VisualElement>
+    <ui:RadioButtonGroup label="Generate members:" value="0" choices="Essentials, Everything, Custom" tooltip="Essentials - Model, Reactor and Installer" name="GenerateMembersMode" view-data-key="_generateMembersMode" style="flex-direction: column;" />
+    <ui:VisualElement name="GeneratedFilesGroup" style="display: flex; margin-left: 5px;" />
+    <ui:Button text="Process" display-tooltip-when-elided="true" name="ProcessButton" />
+    <ui:Label text="Results" display-tooltip-when-elided="true" name="ResultsLabel" />
+</ui:UXML>

@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 1c44b2b8eeee9ab43b286bd750e6c4fe
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: '{"OutputPath": "", "OutputType": 1, "Trigger": 0, "TriggerDelay": 500,
+    "WatchedAssets": []}'
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: af85f98b174a44f285adfc7adb6d1d36, type: 3}
