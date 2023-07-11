@@ -3,10 +3,10 @@
 	public class ModelSingleProperty<TModel> : SingleProperty<TModel>
 		where TModel : class, IModel
 	{
-		public ModelSingleProperty()
+		public ModelSingleProperty(string label) : base(label)
 		{ }
 
-		public ModelSingleProperty(TModel initialValue) : base(initialValue)
+		public ModelSingleProperty(string label, TModel initialValue) : base(label, initialValue)
 		{ }
 
 		public override TModel Value
@@ -14,15 +14,20 @@
 			get => base.Value;
 			set
 			{
-				if (ValueStream.Value != null)
+				if (base.Value == value)
 				{
-					ValueStream.Value.Disposing -= OnValueDisposing;
+					return;
+				}
+				
+				if (base.Value != null)
+				{
+					base.Value.Disposing -= OnValueDisposing;
 				}
 
 				base.Value = value;
-				if (ValueStream.Value != null)
+				if (base.Value != null)
 				{
-					ValueStream.Value.Disposing += OnValueDisposing;
+					base.Value.Disposing += OnValueDisposing;
 				}
 			}
 		}

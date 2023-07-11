@@ -6,10 +6,10 @@ namespace pindwin.umvr.Exceptions
 {
 	public class UMVRDataBindingException : UMVRException
 	{
-		private const string Format = "Failed to obtain data stream {0} {1} in {2}";
+		private const string FORMAT = "Failed to obtain data stream {0} {1} in {2}";
 		private static string Text(Type property, string name, Type member)
 		{
-			return string.Format(Format, property.ToPrettyString(), name, member.ToPrettyString());
+			return string.Format(FORMAT, property.ToPrettyString(), name, member.ToPrettyString());
 		}
 
 		public UMVRDataBindingException(Type dataType, string streamName, Type memberType)

@@ -28,7 +28,10 @@ namespace pindwin.umvr.Repository
 		public event Action<TEntity> Removed;
 		
 		public IReadOnlyList<TEntity> Entities => _list;
-		
+
+		public event Action CountChanged;
+		public Type StoredType => typeof(TConcrete);
+
 		public bool SuppressNotifications
 		{
 			get => _suppressNotifications;
@@ -162,12 +165,10 @@ namespace pindwin.umvr.Repository
 				return;
 			}
 
-			if (entity is not TEntity model)
+			if (entity is TEntity model)
 			{
-				return;
+				Remove(model);
 			}
-
-			Remove(model);
 		}
 
 		private void TryNotifyAdded(TConcrete concrete)
@@ -182,6 +183,7 @@ namespace pindwin.umvr.Repository
 			concrete.AddCleanupHandler(OnEntityDisposing, CleanupPriority.Medium);
 			_reactorFactory.Create(concrete);
 			Added?.Invoke(concrete);
+			CountChanged?.Invoke();
 		}
 		
 		private void TryNotifyRemoved(TConcrete concrete)
@@ -194,6 +196,7 @@ namespace pindwin.umvr.Repository
 			
 			_mainIndex.Remove(concrete.Id);
 			Removed?.Invoke(concrete);
+			CountChanged?.Invoke();
 		}
 
 		public void Dispose()

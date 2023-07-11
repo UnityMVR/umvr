@@ -19,14 +19,16 @@
 	{
 		public void Execute(TParam param)
 		{
-			if (CanExecute(param))
+			if (CanExecute() && IsValid(param))
 			{
 				ExecuteImpl(param);
 			}
 		}
 
-		public abstract bool CanExecute(TParam param);
+		public abstract bool CanExecute();
 
 		protected abstract void ExecuteImpl(TParam param);
+
+		public abstract bool IsValid(TParam payload);
 	}
 }

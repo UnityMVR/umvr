@@ -1,0 +1,115 @@
+.model-container {
+    background-color: rgb(55, 55, 55);
+    align-items: flex-start;
+    max-width: 50%;
+    margin: 0;
+    padding: 2px;
+}
+
+.debugger-column {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    background-color: rgb(50, 50, 50);
+    margin: 3px;
+    margin-left: 5px;
+    padding: 2px;
+}
+
+.debugger-column > .unity-toggle:focus .unity-label
+{
+    color: orange;
+}
+
+.debugger-column > .unity-toggle:hover .unity-label
+{
+    color: darkorange;
+}
+
+.foldout__checkmark
+{
+    margin-left: 1px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.foldout__content {
+    margin-left: 0;
+    padding: 2px;
+}
+
+/* Property */
+
+.property-widget {
+    -unity-font-style: italic;
+    color: rgb(200, 200, 200);
+    margin-left: 5px;
+    padding: 2px;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.property-widget .unity-base-field__input{
+    color: rgb(50, 50, 50);
+    min-width: 60%;
+    align-self: flex-start;
+}
+
+.property-widget .property-widget__label
+{
+    width: 25%;
+    min-width: 25%;
+    align-self: flex-start;
+}
+
+.property-widget .unity-base-field:focus > .unity-base-field__label
+{
+    color: orange;
+}
+
+.property-widget__button
+{
+    --unity-aspect-ratio: 1;
+    -unity-font-style: normal;
+    background-color: rgb(150, 150, 150);
+    color: white;
+    flex-grow: 0;
+    flex-shrink: 1;
+    align-self: flex-start;
+    align-content: center;
+}
+
+.collection-widget__entry .property-widget__label
+{
+    width: 10%;
+    min-width: 10%;
+}
+
+.property-widget .unity-foldout__text
+{
+    color: rgb(200, 200, 200);
+}
+
+.property-widget__dropdown
+{
+    flex-shrink: 1;
+    align-content: flex-start;
+}
+
+/* Slider */
+
+.unity-base-slider__tracker {
+    background-color: rgb(50, 50, 50);
+}
+
+.unity-base-slider__dragger {
+    background-color: rgb(200, 200, 200);
+}
+
+.unity-scroller__low-button {
+    background-color: rgb(50, 50, 50);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.unity-scroller__high-button {
+    background-color: rgb(50, 50, 50);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}

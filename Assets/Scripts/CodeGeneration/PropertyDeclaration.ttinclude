@@ -20,7 +20,7 @@ else if (prop.IsCollection)
 { 
 #>
 			get => <#= prop.FieldName #>.Collection;
-			set => <#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single"#>Property<<#= prop.Type #>>(<#= prop.FieldName #>.Collection, value);
+			set => <#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single"#>Property<<#= prop.Type #>>(nameof(<#= prop.Name #>), <#= prop.FieldName #>.Collection, value);
 <# 
 } 
 else

@@ -1,21 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using pindwin.development;
 using UniRx;
 
 namespace pindwin.umvr.Model
 {
-	public class CollectionProperty<TItem> : Property
+	public class CollectionProperty<TItem> : CollectionProperty
 	{
 		public ReactiveCollection<TItem> Collection { get; }
 		protected CompositeDisposable CompositeDisposable { get; }
 
-		public CollectionProperty() : this(null)
+		public CollectionProperty(string label) : this(label, null)
 		{ }
 
-		public CollectionProperty(IEnumerable<TItem> items) : this(new ReactiveCollection<TItem>(), items)
+		public CollectionProperty(string label, IEnumerable<TItem> items) : this(label, new ReactiveCollection<TItem>(), items)
 		{ }
 
-		public CollectionProperty(ReactiveCollection<TItem> collection, IEnumerable<TItem> items)
+		public CollectionProperty(string label, ReactiveCollection<TItem> collection, IEnumerable<TItem> items) : base(label, typeof(TItem))
 		{
 			Collection = collection.AssertNotNull();
 			Collection.Clear();
@@ -50,5 +52,18 @@ namespace pindwin.umvr.Model
 		{
 			return $"{typeof(TItem)} collection: {(Collection != null ? string.Join(",", Collection) : "null")}";
 		}
+
+		public override IEnumerator GetEnumerator()
+		{
+			return Collection.GetEnumerator();
+		}
+	}
+
+	public abstract class CollectionProperty : Property, IEnumerable
+	{
+		protected CollectionProperty(string label, Type type)
+			: base(label, type) { }
+
+		public abstract IEnumerator GetEnumerator();
 	}
 }

@@ -6,14 +6,14 @@ namespace pindwin.umvr.Model
 	public sealed class ModelCollectionProperty<TModel> : CollectionProperty<TModel>
 		where TModel : class, IModel
 	{
-		public ModelCollectionProperty()
-			: this(new ReactiveCollection<TModel>(), null) { }
+		public ModelCollectionProperty(string label)
+			: this(label, new ReactiveCollection<TModel>(), null) { }
 
-		public ModelCollectionProperty(IEnumerable<TModel> items)
-			: this(new ReactiveCollection<TModel>(), items) { }
+		public ModelCollectionProperty(string label, IEnumerable<TModel> items)
+			: this(label, new ReactiveCollection<TModel>(), items) { }
 
-		public ModelCollectionProperty(ReactiveCollection<TModel> collection, IEnumerable<TModel> items)
-			: base(collection, items)
+		public ModelCollectionProperty(string label, ReactiveCollection<TModel> collection, IEnumerable<TModel> items)
+			: base(label, collection, items)
 		{
 			foreach (TModel model in Collection)
 			{
@@ -65,11 +65,21 @@ namespace pindwin.umvr.Model
 
 		private void HookDisposeHandler(TModel item)
 		{
+			if (item == null)
+			{
+				return;
+			}
+			
 			item.Disposing += CleanupRoutine;
 		}
 
 		private void UnhookDisposeHandler(TModel item)
 		{
+			if (item == null)
+			{
+				return;
+			}
+			
 			item.Disposing -= CleanupRoutine;
 		}
 

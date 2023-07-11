@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using UniRx;
 
 namespace pindwin.umvr.Model
 {
-	public interface IModel : IDisposable
+	public interface IModel : IEnumerable<string>, IDisposable
 	{
 		event Action<IModel> Disposing;
 		Id Id { get; }

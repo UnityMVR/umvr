@@ -19,7 +19,7 @@ namespace pindwin.umvr.example
 		{ }
 	}
 
-	public partial class FooRepository : SingletonRepository<IFoo, FooModel, FooReactor>
+	public partial class FooRepository : Repository<IFoo, FooModel, FooReactor>
 	{
 		public FooRepository(FooReactorFactory fooReactorFactory) : base(fooReactorFactory)
 		{ }
@@ -36,7 +36,7 @@ namespace pindwin.umvr.example.Generated
 		public override void InstallBindings()
 		{
 			Container.BindFactory<Id, System.String, pindwin.umvr.example.IFoo, FooModel, FooFactory>();
-			Container.Bind<IModelFactory<IFoo, System.String, pindwin.umvr.example.IFoo>>().To<FooFactory>().FromResolve();
+			Container.BindInterfacesTo<FooFactory>().FromResolve();
 			Container.BindFactory<FooModel, FooReactor, FooReactorFactory>();
 			Container.BindInterfacesAndSelfTo<FooRepository>().AsSingle();
 		}

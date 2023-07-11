@@ -63,6 +63,11 @@ namespace pindwin.umvr.Model
 		{
 			return base.Create(id);
 		}
+
+		public IModel CreateDefault()
+		{
+			return Create(Id.Next());
+		}
 	}
 
 	[UsedImplicitly]
@@ -120,6 +125,11 @@ namespace pindwin.umvr.Model
 		{
 			return base.Create(id, param0);
 		}
+
+		public IModel CreateDefault()
+		{
+			return Create(Id.Next(), default);
+		}
 	}
 
 	[UsedImplicitly]
@@ -175,6 +185,11 @@ namespace pindwin.umvr.Model
 		protected virtual TConcreteModel Instantiate(Id id, TParam0 param0, TParam1 param1)
 		{
 			return base.Create(id, param0, param1);
+		}
+
+		public IModel CreateDefault()
+		{
+			return Create(Id.Next(), default, default);
 		}
 	}
 
@@ -234,6 +249,11 @@ namespace pindwin.umvr.Model
 		protected virtual TConcreteModel Instantiate(Id id, TParam0 param0, TParam1 param1, TParam2 param2)
 		{
 			return base.Create(id, param0, param1, param2);
+		}
+
+		public IModel CreateDefault()
+		{
+			return Create(Id.Next(), default, default, default);
 		}
 	}
 
@@ -299,6 +319,11 @@ namespace pindwin.umvr.Model
 		{
 			return base.Create(id, param0, param1, param2, param3);
 		}
+
+		public IModel CreateDefault()
+		{
+			return Create(Id.Next(), default, default, default, default);
+		}
 	}
 
 	[UsedImplicitly]
@@ -363,6 +388,11 @@ namespace pindwin.umvr.Model
 			TParam4 param4)
 		{
 			return base.Create(id, param0, param1, param2, param3, param4);
+		}
+
+		public IModel CreateDefault()
+		{
+			return Create(Id.Next(), default, default, default, default, default);
 		}
 	}
 }

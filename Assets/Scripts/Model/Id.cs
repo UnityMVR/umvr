@@ -96,5 +96,11 @@ namespace pindwin.umvr.Model
 		{
 			return $"{_id}@{_timestamp}";
 		}
+
+		public static Id Parse(string param)
+		{
+			string[] parts = param.Split('@');
+			return new Id(long.Parse(parts[1]), int.Parse(parts[0]));
+		}
 	}
 }

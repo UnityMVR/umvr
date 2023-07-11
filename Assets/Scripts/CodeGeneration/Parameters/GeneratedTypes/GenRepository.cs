@@ -13,7 +13,7 @@ namespace GenerationParams
 		{
 			IsSingleton = HasAttribute(model.UnderlyingInterfaceType, typeof(SingletonAttribute));
 			BaseTypes.Add(new Parameter(
-							  $"{(IsSingleton ? "Singleton" : "Entities")}Repository<I{model.Name}, {model.Type}, {model.Name}Reactor>"));
+							  $"{(IsSingleton ? "Singleton" : "")}Repository<I{model.Name}, {model.Type}, {model.Name}Reactor>"));
 			
 			Constructors.Add(new Constructor(Type, new string[]{"public"}));
 			string typeName = string.Format(GenReactorFactory.Format, Name);

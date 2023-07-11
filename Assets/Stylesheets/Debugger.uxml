@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Example/Prefabs/DefaultStylesheet.uss?fileID=7433441132597879392&amp;guid=a6f775f9fc3f85c4cbb9d489c635d810&amp;type=3#DefaultStylesheet" />
+    <ui:Foldout text="Model" name="ModelToggle" class="model-container debugger-column" style="align-items: stretch;">
+        <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Hidden" name="Content" style="flex-grow: 1; align-items: flex-start; flex-shrink: 1; flex-wrap: wrap;">
+            <ui:Foldout text="Foldout" class="model" style="display: none; align-items: stretch; flex-grow: 0;">
+                <ui:Label text="Label" display-tooltip-when-elided="true" class="property" />
+            </ui:Foldout>
+            <ui:Foldout text="Foldout" class="model" style="display: none;">
+                <ui:Label text="Label" display-tooltip-when-elided="true" class="property" />
+            </ui:Foldout>
+        </ui:ScrollView>
+    </ui:Foldout>
+</ui:UXML>

@@ -3,18 +3,18 @@ using UniRx;
 
 namespace pindwin.umvr.Model
 {
-	public class SingleProperty<TItem> : Property, IObservable<TItem>
+	public class SingleProperty<TItem> : Property, IObservable<TItem>, IValueContainer<TItem>
 	{
 		protected readonly ReactiveProperty<TItem> ValueStream;
 		private readonly IDisposable _updateCallback;
 
-		public SingleProperty()
+		public SingleProperty(string label) : base(label, typeof(TItem))
 		{
 			ValueStream = new ReactiveProperty<TItem>();
 			_updateCallback = ValueStream.Subscribe(_ => NotifyChanged());
 		}
 
-		public SingleProperty(TItem initialValue) :  this()
+		public SingleProperty(string label, TItem initialValue) : this(label)
 		{
 			ValueStream.Value = initialValue;
 		}

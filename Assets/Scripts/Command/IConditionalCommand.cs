@@ -5,8 +5,8 @@
 		bool CanExecute();
 	}
 
-	public interface IConditionalCommand<in TParam> : ICommand<TParam>
+	public interface IConditionalCommand<in TParam> : ICommand<TParam>, IValidatable<TParam>
 	{
-		bool CanExecute(TParam param);
+		bool CanExecute();
 	}
 }

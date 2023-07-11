@@ -25,7 +25,7 @@
 	else
 	{
 #>
-			<#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single" #>Property<<#= prop.Type #>>();
+			<#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single" #>Property<<#= prop.Type #>>(nameof(<#= prop.Name #>));
 			<#= prop.Name #> = <#= prop.InitializeExplicitly ? prop.FieldName.Substring(1) : "default" #>;
 <#
 	} 

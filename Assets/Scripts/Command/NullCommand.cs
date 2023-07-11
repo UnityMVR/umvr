@@ -15,7 +15,7 @@
 
 	public sealed class NullCommand<TParam> : ConditionalCommand<TParam>
 	{
-		public override bool CanExecute(TParam _)
+		public override bool CanExecute()
 		{
 			return false;
 		}
@@ -23,6 +23,11 @@
 		protected override void ExecuteImpl(TParam _)
 		{
 			// do nothing
+		}
+
+		public override bool IsValid(TParam payload)
+		{
+			return false;
 		}
 	}
 }

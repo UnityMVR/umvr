@@ -18,13 +18,13 @@ namespace Model.TestCollection
 		public IList<Model.TestModel.ITestModel> Collection
 		{
 			get => _collection.Collection;
-			set => _collection = new ModelCollectionProperty<Model.TestModel.ITestModel>(_collection.Collection, value);
+			set => _collection = new ModelCollectionProperty<Model.TestModel.ITestModel>(nameof(Collection), _collection.Collection, value);
 		}
 
 
 		public TestCollectionModel(pindwin.umvr.Model.Id id) : base(id)
 		{
-			_collection = new ModelCollectionProperty<Model.TestModel.ITestModel>();
+			_collection = new ModelCollectionProperty<Model.TestModel.ITestModel>(nameof(Collection));
 			Collection = default;
 
 			RegisterDataStreams(this);

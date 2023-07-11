@@ -21,6 +21,8 @@ namespace pindwin.umvr.Repository
 
 	public interface IRepository : IDisposable, IEnumerable<IModel>
 	{
+		event Action CountChanged;
+		Type StoredType { get; }
 		bool SuppressNotifications { get; set; }
 		void Add(IModel model);
 		void Remove(IModel model);
