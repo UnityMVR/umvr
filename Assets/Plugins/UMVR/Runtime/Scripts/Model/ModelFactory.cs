@@ -171,6 +171,7 @@ namespace pindwin.umvr.Model
 			{
 				TConcreteModel model = Instantiate(serializer.DeserializeId(serializationPayload), default, default);
 				serializer.DeserializeBody(model, serializationPayload);
+				Repository.Add(model);
 				return model;
 			}
 

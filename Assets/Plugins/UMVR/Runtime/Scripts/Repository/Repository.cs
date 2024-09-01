@@ -28,6 +28,7 @@ namespace pindwin.umvr.Repository
 		public event Action<TEntity> Removed;
 		
 		public IReadOnlyList<TEntity> Entities => _list;
+		protected internal IReadOnlyList<TConcrete> ConcreteEntities => _list;
 
 		public event Action CountChanged;
 		public Type StoredType => typeof(TConcrete);
