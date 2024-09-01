@@ -3,8 +3,7 @@
     "rootNamespace": "pindwin.umvr",
     "references": [
         "UniRx",
-        "Zenject",
-        "umvr.Development"
+        "Zenject"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
