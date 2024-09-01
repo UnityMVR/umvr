@@ -26,6 +26,11 @@ namespace pindwin.umvr.Serialization.BytePatch
 			_stream = new MemoryStream(_buffer);
 			_writer = new BinaryWriter(_stream);
 		}
+		
+		public void Reset()
+		{
+			_stream.Position = 0;
+		}
 
 		public long CopyBufferAndReset(byte[] buffer)
 		{
@@ -70,7 +75,7 @@ namespace pindwin.umvr.Serialization.BytePatch
 			_writer.Write(payload);
 		}
 		
-		protected void WriteCollectionBytes<TItem>(IList<TItem> array)
+		public void WriteCollectionBytes<TItem>(IList<TItem> array)
 			where TItem : IModel
 		{
 			int length = array.Count;
@@ -82,7 +87,7 @@ namespace pindwin.umvr.Serialization.BytePatch
 			}
 		}
 
-		protected void WriteSinglePropertyBytes<TSingle>(TSingle model)
+		public void WriteSinglePropertyBytes<TSingle>(TSingle model)
 			where TSingle : IModel
 		{
 			if (model == null)
