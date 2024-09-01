@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="SelectSessionGroup">
+        <ui:DropdownField label="Selected session:" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="SessionsDropdown" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ActiveSessionGroup" />
+    <ui:VisualElement name="CreateSessionGroup" style="height: auto; display: none; visibility: visible; overflow: visible; flex-direction: column; align-items: center; flex-wrap: wrap; flex-basis: auto; justify-content: center; width: auto; top: auto; flex-grow: 1;">
+        <ui:Label text="There are no DesignerSession assets in project" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; top: auto;" />
+        <ui:Button text="Create" display-tooltip-when-elided="true" name="CreateSession" style="left: auto; width: 20%; top: auto;" />
+    </ui:VisualElement>
+</ui:UXML>

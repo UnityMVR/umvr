@@ -1,0 +1,20 @@
+{
+    "name": "pindwin.umvr.Editor",
+    "rootNamespace": "pindwin.umvr",
+    "references": [
+        "GUID:6a1b51c61aafe7e4595b5b946ebcc688",
+        "GUID:a4853ad50ff863e4aa46b79f1dd034f6",
+        "GUID:09ffaca75a0f1924293eb63a48c8c2a2"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

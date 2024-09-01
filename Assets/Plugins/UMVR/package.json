@@ -1,0 +1,24 @@
+{
+    "name": "com.pindwin.umvr",
+    "displayName": "UMVR Framework",
+    "version": "0.0.1",
+    "unity": "2021.3",
+    "type": "tool",
+    "description": "Utility framework implementing Model-View-Reactor design pattern.",
+    "keywords": [
+        "utilities"
+    ],
+    "hideInEditor":false,
+    "category": "Unity",
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/UnityMVR/umvr-package"
+    },
+    "samples": [
+        {
+            "displayName": "FooExample",
+            "description": "Basic use case",
+            "path": "Samples~/Example"
+        }
+    ]
+}
