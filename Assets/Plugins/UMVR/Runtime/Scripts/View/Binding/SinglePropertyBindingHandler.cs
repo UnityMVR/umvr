@@ -35,7 +35,7 @@ namespace pindwin.umvr.View.Binding
 			_updateMethod = updateCommand;
 			if (_displayTarget is IPropertyWidget single)
 			{
-				single.IsReadonly = _updateMethod?.CanExecute() == true;
+				single.IsReadonly = _updateMethod?.CanExecute() != true;
 			}
 		}
 

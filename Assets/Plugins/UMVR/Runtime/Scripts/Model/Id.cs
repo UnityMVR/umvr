@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Threading;
+using UnityEngine;
 
 namespace pindwin.umvr.Model
 {
 	[Serializable]
 	public struct Id : IEquatable<Id>
 	{
-		private long _timestamp;
-		private int _id;
+		[SerializeField] private int _timestamp;
+		[SerializeField] private int _id;
 
 		public static readonly Id DEFAULT = new Id(0, 0);
 		public static readonly Id UNKNOWN = new Id(0, -1);
-		public const int SIZEOF = sizeof(long) + sizeof(int);
+		public const int SIZEOF = sizeof(int) + sizeof(int);
 
 		private static int incrementalId;
-		private static long _appRunSignature;
+		private static int _appRunSignature;
 		
 		static Id()
 		{
@@ -33,15 +33,15 @@ namespace pindwin.umvr.Model
 
 			void RefreshSignature()
 			{
-				_appRunSignature = (Process.GetCurrentProcess().StartTime +
-									TimeSpan.FromSeconds(UnityEditor.EditorApplication.timeSinceStartup)).Ticks;
+				_appRunSignature = GetUnixTimestamp(Process.GetCurrentProcess().StartTime +
+													TimeSpan.FromSeconds(UnityEditor.EditorApplication.timeSinceStartup));
 			}
 #else
-			_appRunSignature = Process.GetCurrentProcess().StartTime.Ticks;
+			_appRunSignature = GetUnixTimestamp(Process.GetCurrentProcess().StartTime);
 #endif
 		}
 
-		private Id(long timestamp, int id)
+		private Id(int timestamp, int id)
 		{
 			_timestamp = timestamp;
 			_id = id;
@@ -49,7 +49,7 @@ namespace pindwin.umvr.Model
 
 		public Id(BinaryReader reader)
 		{
-			_timestamp = reader.ReadInt64();
+			_timestamp = reader.ReadInt32();
 			_id = reader.ReadInt32();
 		}
 
@@ -100,7 +100,12 @@ namespace pindwin.umvr.Model
 		public static Id Parse(string param)
 		{
 			string[] parts = param.Split('@');
-			return new Id(long.Parse(parts[1]), int.Parse(parts[0]));
+			return new Id(int.Parse(parts[1]), int.Parse(parts[0]));
+		}
+		
+		private static int GetUnixTimestamp(DateTime stampTime)
+		{
+			return (int) (stampTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 		}
 	}
 }

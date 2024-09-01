@@ -16,6 +16,11 @@ namespace pindwin.umvr.Repository
 			Added += ValidateSingleton;
 		}
 
+		public TModel Value => ConcreteEntities.Count > 0 ? ConcreteEntities[0] : default;
+
+		public static implicit operator TConcrete(SingletonRepository<TModel, TConcrete, TPresenter> r) =>
+			r.ConcreteEntities.Count > 0 ? r.ConcreteEntities[0] : default;
+
 		private void ValidateSingleton(TModel obj)
 		{
 			if (Entities.Count > 1)
@@ -30,7 +35,5 @@ namespace pindwin.umvr.Repository
 				);
 			}
 		}
-
-		public TModel Value => Entities.Count > 0 ? Entities[0] : default;
 	}
 }

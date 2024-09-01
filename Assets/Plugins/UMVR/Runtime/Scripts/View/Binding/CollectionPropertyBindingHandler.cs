@@ -57,7 +57,7 @@ namespace pindwin.umvr.View.Binding
 		public void BindFeedback(IConditionalCommand<string> updateCommand)
 		{
 			_updateMethod = updateCommand;
-			_displayTarget.IsReadonly = _updateMethod?.CanExecute() == true;
+			_displayTarget.IsReadonly = _updateMethod?.CanExecute() != true;
 		}
 
 		public void Validate(string payload)

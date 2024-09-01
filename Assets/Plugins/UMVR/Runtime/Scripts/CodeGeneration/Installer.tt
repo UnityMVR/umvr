@@ -40,7 +40,7 @@ namespace <#= model.Namespace #>.Generated
 		public override void InstallBindings()
 		{
 			Container.BindFactory<Id<#= factory.GetBindingGenericParametersString() #>, <#= model.Type#>, <#= factory.Type#>>();
-			Container.Bind<IModelFactory<I<#= model.Name #><#= factory.GetBindingGenericParametersString() #>>>().To<<#= factory.Type#>>().FromResolve();
+			Container.BindInterfacesTo<<#= factory.Type#>>().FromResolve();
 			Container.BindFactory<<#= model.Type#>, <#= reactor.Type#>, <#= reactorFactory.Type#>>();
 			Container.BindInterfacesAndSelfTo<<#= repository.Type #>>().AsSingle();
 		}
