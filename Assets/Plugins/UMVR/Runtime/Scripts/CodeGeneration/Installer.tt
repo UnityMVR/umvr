@@ -37,11 +37,15 @@ namespace <#= model.Namespace #>.Generated
 {
 	public class <#= model.Name #>InstallerBase : Installer<<#= model.Name #>InstallerBase>
 	{
-		public override void InstallBindings()
+		public override void InstallBindings(bool useReactor)
 		{
 			Container.BindFactory<Id<#= factory.GetBindingGenericParametersString() #>, <#= model.Type#>, <#= factory.Type#>>();
 			Container.BindInterfacesTo<<#= factory.Type#>>().FromResolve();
-			Container.BindFactory<<#= model.Type#>, <#= reactor.Type#>, <#= reactorFactory.Type#>>();
+			if(useReactor)
+			{
+				Container.BindFactory<<#= model.Type#>, <#= reactor.Type#>, <#= reactorFactory.Type#>>();
+			}
+			
 			Container.BindInterfacesAndSelfTo<<#= repository.Type #>>().AsSingle();
 		}
 	}
