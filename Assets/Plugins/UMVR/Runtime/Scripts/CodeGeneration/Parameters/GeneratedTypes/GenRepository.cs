@@ -14,7 +14,7 @@ namespace GenerationParams
 		}
 		
 		public GenRepository(GenConcreteModel model)
-			: base(model.Name, Format, model.Namespace, new string[] { "public", "partial", "class" })
+			: base(model.Name, Format, model.Namespace, new string[] { "internal", "partial", "class" })
 		{
 			IsSingleton = HasAttribute(model.UnderlyingInterfaceType, typeof(SingletonAttribute));
 			BaseTypes.Add(new Parameter(

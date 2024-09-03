@@ -5,6 +5,6 @@
 #>
 namespace <#= repository.Namespace #>
 {
-	public partial class <#= repository.Type #><TReactor>
+	internal partial class <#= repository.Type #><TReactor>
 	{ }
 }

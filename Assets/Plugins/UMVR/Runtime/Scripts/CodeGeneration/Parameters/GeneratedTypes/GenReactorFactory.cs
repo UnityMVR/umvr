@@ -7,7 +7,7 @@
 		public string NonNullType => $"{string.Format(Format, Name)}<{string.Format(GenReactor.Format, Name)}>";
 		
 		public GenReactorFactory(GenConcreteModel model)
-			: base(model.Name, Format, model.Namespace, new string[] { "public", "class" })
+			: base(model.Name, Format, model.Namespace, new string[] { "internal", "class" })
 		{
 			BaseTypes.Add(new Parameter($"ReactorFactory<{string.Format(GenConcreteModel.Format, Name)}, TReactor>"));
 			
