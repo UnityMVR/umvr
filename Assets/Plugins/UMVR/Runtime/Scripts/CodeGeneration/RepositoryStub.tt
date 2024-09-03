@@ -1,9 +1,10 @@
 <#@ template debug="false" hostspecific="true" language="C#v3.5" #>
 <# 
-	GenerationParams.GenRepository repository = ((pindwin.umvr.Editor.Generation.UMVRTemplateGenerator)Host).Settings.GenRepository;
+	GenerationParams.GenSettings settings = ((pindwin.umvr.Editor.Generation.UMVRTemplateGenerator)Host).Settings;
+	GenerationParams.GenRepository repository = settings.GenRepository;
 #>
 namespace <#= repository.Namespace #>
 {
-	public partial class <#= repository.Type #>
+	public partial class <#= repository.Type #><TReactor>
 	{ }
 }
