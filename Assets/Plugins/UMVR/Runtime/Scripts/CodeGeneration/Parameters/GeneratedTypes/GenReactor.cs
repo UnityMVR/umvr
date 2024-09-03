@@ -5,6 +5,8 @@ namespace GenerationParams
 	public class GenReactor : GenType
 	{
 		public const string Format = "{0}Reactor";
+		
+		public string NullType => $"Null{Type}";
 
 		public GenReactor(GenConcreteModel model)
 			: base(model.Name, Format, model.Namespace, new string[] { "public", "partial", "class" })

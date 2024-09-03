@@ -19,13 +19,15 @@ namespace pindwin.umvr.example
 		{ }
 	}
 
-	public partial class FooRepository<TReactor> : Repository<IFoo, FooModel, TReactor> where TReactor : Reactor<FooModel>
+	public partial class FooRepository<TReactor> : Repository<IFoo, FooModel, TReactor>
+		where TReactor : Reactor<FooModel>
 	{
 		public FooRepository(FooReactorFactory<TReactor> fooReactorFactory) : base(fooReactorFactory)
 		{ }
 	}
 	
-	public class FooReactorFactory<TReactor> : ReactorFactory<FooModel, TReactor> where TReactor : Reactor<FooModel>
+	public class FooReactorFactory<TReactor> : ReactorFactory<FooModel, TReactor>
+		where TReactor : Reactor<FooModel>
 	{ }
 
 	internal class NullFooReactor : Reactor<FooModel>
