@@ -31,18 +31,46 @@ namespace <#= model.Namespace #>
 	
 	<#= reactorFactory.ToDeclarationString("	") #>
 	{ }
+
+	internal class <#= reactor.NullType #> : Reactor<<#= model.Type #>>
+	{
+		public <#= reactor.NullType #>(<#= model.Type #> model) : base(model)
+		{ }
+
+		protected override void BindDataSourceImpl(<#= model.Type #> model)
+		{ }
+	}
 }
 
 namespace <#= model.Namespace #>.Generated
 {
 	public class <#= model.Name #>InstallerBase : Installer<<#= model.Name #>InstallerBase>
 	{
+		public static void Install(DiContainer container, bool useReactor = true)
+		{
+			container.Instantiate<<#= model.Name #>InstallerBase>().InstallBindings(useReactor);
+		}
+
 		public override void InstallBindings()
+		{
+			InstallBindings(true);
+		}
+
+		public void InstallBindings(bool installReactor)
 		{
 			Container.BindFactory<Id<#= factory.GetBindingGenericParametersString() #>, <#= model.Type#>, <#= factory.Type#>>();
 			Container.BindInterfacesTo<<#= factory.Type#>>().FromResolve();
-			Container.BindFactory<<#= model.Type#>, <#= reactor.Type#>, <#= reactorFactory.Type#>>();
-			Container.BindInterfacesAndSelfTo<<#= repository.Type #>>().AsSingle();
+			
+			if (installReactor)
+			{
+				Container.BindFactory<<#= model.Type#>, <#= reactor.Type#>, <#= reactorFactory.NonNullType#>>();
+				Container.BindInterfacesAndSelfTo<<#= repository.GetType(reactor.Type) #>>().AsSingle();
+			}
+			else
+			{
+				Container.BindFactory<<#= model.Type#>, <#= reactor.NullType#>, <#= reactorFactory.NullType#>>();
+				Container.BindInterfacesAndSelfTo<<#= repository.GetType(reactor.NullType) #>>().AsSingle();
+			}
 		}
 	}
 }

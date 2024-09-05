@@ -1,5 +1,5 @@
 namespace pindwin.umvr.example
 {
-	public partial class FooRepository
+	internal partial class FooRepository<TReactor>
 	{ }
 }

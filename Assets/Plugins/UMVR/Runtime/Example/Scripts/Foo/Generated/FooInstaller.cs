@@ -19,26 +19,56 @@ namespace pindwin.umvr.example
 		{ }
 	}
 
-	public partial class FooRepository : Repository<IFoo, FooModel, FooReactor>
+	internal partial class FooRepository<TReactor> : Repository<IFoo, FooModel, TReactor>
+		where TReactor : Reactor<FooModel>
 	{
-		public FooRepository(FooReactorFactory fooReactorFactory) : base(fooReactorFactory)
+		public FooRepository(FooReactorFactory<TReactor> fooReactorFactory) : base(fooReactorFactory)
 		{ }
 	}
 	
-	public class FooReactorFactory : ReactorFactory<FooModel, FooReactor>
+	internal class FooReactorFactory<TReactor> : ReactorFactory<FooModel, TReactor>
+		where TReactor : Reactor<FooModel>
 	{ }
+
+	internal class NullFooReactor : Reactor<FooModel>
+	{
+		public NullFooReactor(FooModel model) : base(model)
+		{ }
+
+		protected override void BindDataSourceImpl(FooModel model)
+		{ }
+	}
 }
 
 namespace pindwin.umvr.example.Generated
 {
 	public class FooInstallerBase : Installer<FooInstallerBase>
 	{
+		public static void Install(DiContainer container, bool useReactor = true)
+		{
+			container.Instantiate<FooInstallerBase>().InstallBindings(useReactor);
+		}
+
 		public override void InstallBindings()
+		{
+			InstallBindings(true);
+		}
+
+		public void InstallBindings(bool installReactor)
 		{
 			Container.BindFactory<Id, System.String, pindwin.umvr.example.IFoo, FooModel, FooFactory>();
 			Container.BindInterfacesTo<FooFactory>().FromResolve();
-			Container.BindFactory<FooModel, FooReactor, FooReactorFactory>();
-			Container.BindInterfacesAndSelfTo<FooRepository>().AsSingle();
+			
+			if (installReactor)
+			{
+				Container.BindFactory<FooModel, FooReactor, FooReactorFactory<FooReactor>>();
+				Container.BindInterfacesAndSelfTo<FooRepository<FooReactor>>().AsSingle();
+			}
+			else
+			{
+				Container.BindFactory<FooModel, NullFooReactor, FooReactorFactory<NullFooReactor>>();
+				Container.BindInterfacesAndSelfTo<FooRepository<NullFooReactor>>().AsSingle();
+			}
 		}
 	}
 }
