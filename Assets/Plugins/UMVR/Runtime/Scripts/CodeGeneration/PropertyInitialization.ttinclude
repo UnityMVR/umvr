@@ -41,14 +41,23 @@
 			<#= prop.Name #> = <#= prop.InitializeExplicitly ? prop.FieldName.Substring(1) : "default" #>;
 <#
 		}
-		else if (prop.CustomImplementation && prop.InitializeExplicitly)
+		else if (prop.CustomImplementation)
 		{
+			if (prop.InitializeExplicitly)
+			{
 #>
 			foreach (var item in <#= prop.FieldName.Substring(1) #>)
 			{
 				<#= prop.Name #>.Add(item);
 			}
 <#
+			}
+			else if (prop.DoNotInitialize == false)
+			{
+#>
+			// <#= prop.Name #> not initialized because of custom collection implementation & default initialization
+<#
+			}
 		}
 	} 
 			if (prop.CascadeDisposeDownstream)

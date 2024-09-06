@@ -65,6 +65,7 @@ namespace GenTest
 
 			_col2 = new CollectionProperty<System.Int32>(nameof(Col2));
 
+			// Col3 not initialized because of custom collection implementation & default initialization
 
 			foreach (var item in col4)
 			{
@@ -79,6 +80,7 @@ namespace GenTest
 
 			_col8 = new ModelCollectionProperty<pindwin.umvr.example.IFoo>(nameof(Col8));
 
+			// Col9 not initialized because of custom collection implementation & default initialization
 
 			foreach (var item in col10)
 			{
