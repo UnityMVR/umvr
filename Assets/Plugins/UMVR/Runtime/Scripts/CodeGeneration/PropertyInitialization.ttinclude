@@ -4,10 +4,12 @@
 	// expects GenerationParams.GeneratedProperty prop
 	// expects GenerationParams.GenSettings settings
 #>
-<#if ((prop.DoNotInitialize && prop.IsCollection == false && prop.IsModel == false)
-		|| (prop.IsCommand && prop.IsReadonly == false && prop.InitializeExplicitly == false))
+<#if (prop.DoNotInitialize && prop.CustomImplementation)
 	{
 		//do nothing
+#>
+			// <#= prop.Name #> not initialized because of custom implementation & do not initialize flag
+<#
 	}
 	else if (prop.IsCommand || prop.IsReadonly)
 	{
@@ -25,7 +27,14 @@
 	else
 	{
 #>
+<#
+		if (prop.CustomImplementation == false)
+		{
+#>
 			<#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single" #>Property<<#= prop.Type #>>(nameof(<#= prop.Name #>));
+<#
+		}
+#>
 			<#= prop.Name #> = <#= prop.InitializeExplicitly ? prop.FieldName.Substring(1) : "default" #>;
 <#
 	} 
