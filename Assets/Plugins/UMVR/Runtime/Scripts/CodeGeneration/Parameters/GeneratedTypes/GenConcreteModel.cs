@@ -41,10 +41,11 @@ namespace GenerationParams
 				prop2.IsCollection = p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(IList<>);
 				Type propertyType = prop2.IsCollection ? p.PropertyType.GenericTypeArguments[0] : p.PropertyType;
 				prop2.Type = propertyType.FullName;
+				prop2.CustomImplementation = HasAttribute(p, typeof(CustomImplementationAttribute));
 
 				prop2.IsReadonly = p.SetMethod == null && !prop2.IsCollection;
 				var initialization = (InitializationAttribute)Attribute.GetCustomAttribute(p, typeof(InitializationAttribute));
-				if (prop2.IsReadonly)
+				if (prop2.IsReadonly && prop2.CustomImplementation == false)
 				{
 					if (initialization != null && initialization.Level != InitializationLevel.Explicit)
 					{
@@ -66,7 +67,6 @@ namespace GenerationParams
 				}
 
 				prop2.IsModel = typeof(IModel).IsAssignableFrom(propertyType);
-				prop2.CustomImplementation = HasAttribute(p, typeof(CustomImplementationAttribute));
 				prop2.IsCommand = typeof(ICommand).IsAssignableFrom(propertyType);
 
 				var cascade = (CascadeDisposeAttribute) Attribute.GetCustomAttribute(

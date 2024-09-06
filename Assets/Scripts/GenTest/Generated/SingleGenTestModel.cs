@@ -86,11 +86,11 @@ namespace GenTest
 			_prop2 = new SingleProperty<System.Int32>(nameof(Prop2));
 			Prop2 = default;
 
-			Prop3 = default;
+			// Prop3 not initialized because of custom implementation & initialization flag
 
 			Prop4 = prop4;
 
-			// Prop5 not initialized because of custom implementation & do not initialize flag
+			// Prop5 not initialized because of custom implementation & initialization flag
 
 			_prop6 = new ModelSingleProperty<pindwin.umvr.example.IFoo>(nameof(Prop6));
 			Prop6 = default;
@@ -101,11 +101,11 @@ namespace GenTest
 			_prop8 = new ModelSingleProperty<pindwin.umvr.example.IFoo>(nameof(Prop8));
 			Prop8 = default;
 
-			Prop9 = default;
+			// Prop9 not initialized because of custom implementation & initialization flag
 
 			Prop10 = prop10;
 
-			// Prop11 not initialized because of custom implementation & do not initialize flag
+			// Prop11 not initialized because of custom implementation & initialization flag
 
 			RegisterDataStreams(this);
 		}

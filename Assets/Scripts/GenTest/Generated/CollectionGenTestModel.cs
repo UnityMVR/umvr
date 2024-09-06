@@ -65,14 +65,14 @@ namespace GenTest
 
 			_col2 = new CollectionProperty<System.Int32>(nameof(Col2));
 
-			// Col3 not initialized because of custom collection implementation & default initialization
+			// Col3 not initialized because of custom implementation & initialization flag
 
 			foreach (var item in col4)
 			{
 				Col4.Add(item);
 			}
 
-			// Col5 not initialized because of custom implementation & do not initialize flag
+			// Col5 not initialized because of custom implementation & initialization flag
 
 			_col6 = new ModelCollectionProperty<pindwin.umvr.example.IFoo>(nameof(Col6));
 
@@ -80,14 +80,14 @@ namespace GenTest
 
 			_col8 = new ModelCollectionProperty<pindwin.umvr.example.IFoo>(nameof(Col8));
 
-			// Col9 not initialized because of custom collection implementation & default initialization
+			// Col9 not initialized because of custom implementation & initialization flag
 
 			foreach (var item in col10)
 			{
 				Col10.Add(item);
 			}
 
-			// Col11 not initialized because of custom implementation & do not initialize flag
+			// Col11 not initialized because of custom implementation & initialization flag
 
 			RegisterDataStreams(this);
 		}

@@ -7,13 +7,21 @@ namespace GenTest
 {
 	public interface IReadonlySingleGenTest : IModel
 	{
-		[Initialization(InitializationLevel.Default)] int Prop12 { get; }
-		[Initialization(InitializationLevel.Explicit)] int Prop13 { get; }
-		[Initialization(InitializationLevel.Skip)] int Prop14 { get; }
+		[Initialization(InitializationLevel.Default)] int Prop0 { get; }
+		[Initialization(InitializationLevel.Explicit)] int Prop1 { get; }
+		[Initialization(InitializationLevel.Skip)] int Prop2 { get; }
 	
-		[Initialization(InitializationLevel.Default)] IFoo Prop15 { get; }
-		[Initialization(InitializationLevel.Explicit)] IFoo Prop16 { get; }
-		[Initialization(InitializationLevel.Skip)] IFoo Prop17 { get; }
+		[CustomImplementation, Initialization(InitializationLevel.Default)] int Prop3 { get; }
+		[CustomImplementation, Initialization(InitializationLevel.Explicit)] int Prop4 { get; }
+		[CustomImplementation, Initialization(InitializationLevel.Skip)] int Prop5 { get; }
+		
+		[Initialization(InitializationLevel.Default)] IFoo Prop7 { get; }
+		[Initialization(InitializationLevel.Explicit)] IFoo Prop8 { get; }
+		[Initialization(InitializationLevel.Skip)] IFoo Prop9 { get; }
+	
+		[CustomImplementation, Initialization(InitializationLevel.Default)] IFoo Prop10 { get; }
+		[CustomImplementation, Initialization(InitializationLevel.Explicit)] IFoo Prop11 { get; }
+		[CustomImplementation, Initialization(InitializationLevel.Skip)] IFoo Prop12 { get; }
 	
 	}
 }
