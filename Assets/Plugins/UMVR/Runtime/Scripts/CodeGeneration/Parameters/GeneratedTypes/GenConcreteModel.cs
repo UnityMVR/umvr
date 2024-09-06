@@ -42,7 +42,7 @@ namespace GenerationParams
 				Type propertyType = prop2.IsCollection ? p.PropertyType.GenericTypeArguments[0] : p.PropertyType;
 				prop2.Type = propertyType.FullName;
 
-				prop2.IsReadonly = p.SetMethod == null;
+				prop2.IsReadonly = p.SetMethod == null && !prop2.IsCollection;
 				var initialization = (InitializationAttribute)Attribute.GetCustomAttribute(p, typeof(InitializationAttribute));
 				if (prop2.IsReadonly)
 				{
@@ -62,7 +62,7 @@ namespace GenerationParams
 
 				if (prop2.InitializationLevel == InitializationLevel.Explicit)
 				{
-					Constructors[0].Params.Add(new Parameter(prop2.Type, prop2.FieldName.Substring(1)));
+					Constructors[0].Params.Add(new Parameter(prop2.IsCollection ? $"IEnumerable<{prop2.Type}>" : prop2.Type, prop2.FieldName.Substring(1)));
 				}
 
 				prop2.IsModel = typeof(IModel).IsAssignableFrom(propertyType);

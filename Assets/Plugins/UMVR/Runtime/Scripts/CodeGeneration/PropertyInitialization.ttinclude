@@ -31,12 +31,25 @@
 		if (prop.CustomImplementation == false)
 		{
 #>
-			<#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single" #>Property<<#= prop.Type #>>(nameof(<#= prop.Name #>));
+			<#= prop.FieldName #> = new <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single" #>Property<<#= prop.Type #>>(nameof(<#= prop.Name #>)<#= prop.IsCollection && prop.InitializeExplicitly ? $", {prop.FieldName.Substring(1)}" : ""#>);
 <#
 		}
+
+		if (prop.IsCollection == false)
+		{
 #>
 			<#= prop.Name #> = <#= prop.InitializeExplicitly ? prop.FieldName.Substring(1) : "default" #>;
 <#
+		}
+		else if (prop.CustomImplementation && prop.InitializeExplicitly)
+		{
+#>
+			foreach (var item in <#= prop.FieldName.Substring(1) #>)
+			{
+				<#= prop.Name #>.Add(item);
+			}
+<#
+		}
 	} 
 			if (prop.CascadeDisposeDownstream)
 {
