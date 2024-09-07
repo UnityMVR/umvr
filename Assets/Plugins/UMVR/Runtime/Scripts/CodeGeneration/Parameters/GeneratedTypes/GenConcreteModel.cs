@@ -75,6 +75,13 @@ namespace GenerationParams
 					typeof(CascadeDisposeAttribute)
 				);
 				prop.CascadeDirection = cascade?.Direction ?? CascadeDirection.None;
+				if (prop.CascadeDirection != CascadeDirection.None && !prop.IsModel)
+				{
+					logger.Log($"Ignoring value of {type.ToPrettyString()}.{p.Name} {typeof(CascadeDisposeAttribute)}.{Environment.NewLine}" +
+							   $"Property is not an IModel, so it's not possible to cascade dispose it.", LogSeverity.Warning);
+					
+					prop.CascadeDirection = CascadeDirection.None;
+				}
 
 				Properties.Add(prop);
 			}
