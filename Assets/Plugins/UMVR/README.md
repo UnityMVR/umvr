@@ -40,6 +40,10 @@ repository.GetBy(nameof(IFoo.Text), "Hello world");
 
 And then there's the obvious stuff: `Added/Removed` events, iterators.
 
+## Code generation
+
+[Cheat sheet](Attributes.md) for the code generation.
+
 ## Conventions and assumptions
 
 1. Zenject usage is assumed and made easier by automatic generation of installers

@@ -18,6 +18,5 @@ namespace pindwin.umvr.example
 		{
 			get; private set;
 		}
-
 	}
 }

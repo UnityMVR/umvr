@@ -3,6 +3,7 @@
 	GenerationParams.GenSettings settings = ((pindwin.umvr.Editor.Generation.UMVRTemplateGenerator)Host).Settings;
 	GenerationParams.GenConcreteModel model = settings.GenConcreteModel;
 #>
+using System.Collections.Generic;
 using pindwin.umvr.Model;
 
 namespace <#= model.Namespace #>
