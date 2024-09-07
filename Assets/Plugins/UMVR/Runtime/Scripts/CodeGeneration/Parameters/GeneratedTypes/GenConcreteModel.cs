@@ -28,7 +28,7 @@ namespace GenerationParams
 			Constructors[0].BaseConstructor.Params.Add(new Parameter(typeof(Id)));
 			foreach (PropertyInfo p in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
 			{
-				Property prop2 = new Property();
+				Property prop = new Property();
 				if (p.GetMethod == null)
 				{
 					logger.Log($"{typeof(GenConcreteModel)} ignored {type.ToPrettyString()}.{p.Name} write-only property when generating model.{Environment.NewLine}" +
@@ -37,45 +37,46 @@ namespace GenerationParams
 					continue;
 				}
 
-				prop2.Name = p.Name;
-				prop2.IsCollection = p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(IList<>);
-				Type propertyType = prop2.IsCollection ? p.PropertyType.GenericTypeArguments[0] : p.PropertyType;
-				prop2.Type = propertyType.FullName;
-				prop2.CustomImplementation = HasAttribute(p, typeof(CustomImplementationAttribute));
-
-				prop2.IsReadonly = p.SetMethod == null && !prop2.IsCollection;
+				prop.Name = p.Name;
+				prop.IsCollection = p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(IList<>);
+				Type propertyType = prop.IsCollection ? p.PropertyType.GenericTypeArguments[0] : p.PropertyType;
+				prop.Type = propertyType.FullName;
+				prop.CustomImplementation = HasAttribute(p, typeof(CustomImplementationAttribute));
+				prop.IsReadonly = p.SetMethod == null && !prop.IsCollection;
+				
 				var initialization = (InitializationAttribute)Attribute.GetCustomAttribute(p, typeof(InitializationAttribute));
-				if (prop2.IsReadonly && prop2.CustomImplementation == false)
+				if (prop.IsReadonly && prop.CustomImplementation == false)
 				{
 					if (initialization != null && initialization.Level != InitializationLevel.Explicit)
 					{
 						logger.Log($"Ignoring value of {type.ToPrettyString()}.{p.Name} {typeof(InitializationAttribute)}.{Environment.NewLine}" +
-								   $"Since property has no setter, it's considered readonly and defaults to explicit initialization.{Environment.NewLine}" +
+								   $"Since property has no setter or [CustomImplementation], it's considered readonly and defaults to explicit initialization.{Environment.NewLine}" +
+								   $"If you want to implement it manually, add [CustomImplementation].{Environment.NewLine}" +
 								   $"If you want to use specified initialization level, add a set method.", LogSeverity.Warning);
 					}
 
-					prop2.InitializationLevel = InitializationLevel.Explicit;
+					prop.InitializationLevel = InitializationLevel.Explicit;
 				}
 				else
 				{
-					prop2.InitializationLevel = initialization?.Level ?? InitializationLevel.Default;
+					prop.InitializationLevel = initialization?.Level ?? InitializationLevel.Default;
 				}
 
-				if (prop2.InitializationLevel == InitializationLevel.Explicit)
+				if (prop.InitializationLevel == InitializationLevel.Explicit)
 				{
-					Constructors[0].Params.Add(new Parameter(prop2.IsCollection ? $"IEnumerable<{prop2.Type}>" : prop2.Type, prop2.FieldName.Substring(1)));
+					Constructors[0].Params.Add(new Parameter(prop.IsCollection ? $"IEnumerable<{prop.Type}>" : prop.Type, prop.FieldName.Substring(1)));
 				}
 
-				prop2.IsModel = typeof(IModel).IsAssignableFrom(propertyType);
-				prop2.IsCommand = typeof(ICommand).IsAssignableFrom(propertyType);
+				prop.IsModel = typeof(IModel).IsAssignableFrom(propertyType);
+				prop.IsCommand = typeof(ICommand).IsAssignableFrom(propertyType);
 
 				var cascade = (CascadeDisposeAttribute) Attribute.GetCustomAttribute(
 					p,
 					typeof(CascadeDisposeAttribute)
 				);
-				prop2.CascadeDirection = cascade?.Direction ?? CascadeDirection.None;
+				prop.CascadeDirection = cascade?.Direction ?? CascadeDirection.None;
 
-				Properties.Add(prop2);
+				Properties.Add(prop);
 			}
 			
 			TryAddAdditionalParameters(type);

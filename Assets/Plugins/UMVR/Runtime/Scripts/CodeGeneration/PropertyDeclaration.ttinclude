@@ -7,7 +7,7 @@ if (prop.CustomImplementation)
 #>
 		public <#= prop.IsCollection ? $"IList<{prop.Type}>" : prop.Type#> <#= prop.Name#> { get; <#= prop.IsReadonly ? "private " : "" #>set; }
 <#
-	continue;;
+	continue;
 }
 #>
 <#
