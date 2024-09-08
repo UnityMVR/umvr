@@ -21,6 +21,8 @@ namespace GenerationParams
 		public TokensCollection<Constructor> Constructors { get; } = new();
 		public TokensCollection<Method> Methods { get; } = new();
 		public TokensCollection<Event> Events { get; } = new();
+		
+		public TokensCollection<Indexer> Indexers { get; } = new();
 
 		public string ToDeclarationString(string currentIndent, string indent = "	")
 		{

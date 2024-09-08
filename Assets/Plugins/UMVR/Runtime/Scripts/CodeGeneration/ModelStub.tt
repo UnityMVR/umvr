@@ -39,6 +39,13 @@ namespace <#= model.Namespace #>
 		<#= @event.ResolveSignature() #>
 <#
 			}
+
+			foreach (var indexer in model.Indexers)
+			{
+#>
+		<#= indexer.ResolveSignature() #>
+<#
+			}
 #>
 	}
 }

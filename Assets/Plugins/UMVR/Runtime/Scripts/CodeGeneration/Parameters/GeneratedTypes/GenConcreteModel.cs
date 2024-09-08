@@ -30,7 +30,7 @@ namespace GenerationParams
 			{
 				if ((p.GetIndexParameters()?.Length ?? 0) > 0)
 				{
-					//skip indexers
+					Indexers.Add(new Indexer(p));
 					continue;
 				}
 				
