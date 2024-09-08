@@ -88,6 +88,7 @@ namespace GenerationParams
 			
 			TryAddAdditionalParameters(type);
 			TryAddMethods(type);
+			TryAddEvents(type);
 		}
 
 		private void TryAddAdditionalParameters(MemberInfo type)
@@ -117,6 +118,16 @@ namespace GenerationParams
 			if (methods?.Count > 0)
 			{
 				Methods.AddRange(methods);
+			}
+		}
+		
+		private void TryAddEvents(Type type)
+		{
+			List<Event> events = type.GetEvents(BindingFlags.Public | BindingFlags.Instance).Where(e => e.IsSpecialName == false)
+				.Select(e => new Event(e)).ToList();
+			if (events?.Count > 0)
+			{
+				Events.AddRange(events);
 			}
 		}
 	}

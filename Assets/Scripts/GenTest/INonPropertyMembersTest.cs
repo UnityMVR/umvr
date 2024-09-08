@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using pindwin.umvr.Model;
 
 namespace GenTest
@@ -15,6 +16,7 @@ namespace GenTest
 		int Method1(int param);
 		
 		void Method3<TParam>(TParam param);
+		List<TParam> Method4<TParam>(HashSet<TParam> param);
 
 		event Action Event0;
 		event Action<int> Event1;

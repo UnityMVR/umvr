@@ -19,7 +19,7 @@ namespace pindwin.development
 
             Type[] args = t.GenericTypeArguments;
             StringBuilder sb = new StringBuilder();
-            string[] parts = t.FullName.Split('`');
+            string[] parts = t.FullName != null ? t.FullName.Split('`') : (t.AssemblyQualifiedName != null ? t.AssemblyQualifiedName.Split('`') : t.Name.Split('`'));
             sb.Append(parts[0]);
             sb.Append("<");
             for (int i = 0; i < args.Length; i++)
