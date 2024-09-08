@@ -60,7 +60,25 @@
 		}
 	} 
 			if (prop.CascadeDisposeDownstream)
-{
+			{
+				if (prop.IsCollection)
+				{
 #>
-			Disposing += _ => <#= prop.Name #>?.Dispose();
-<#}#>
+			Disposing += _ => 
+			{
+				foreach (var item in <#= prop.Name #>)
+				{
+					item.Dispose();
+				}
+				<#= prop.CustomImplementation ? "// No cascade dispose because of custom implementation" : $"{(prop.IsReadonly ? prop.Name : prop.FieldName)}?.Dispose();"#>
+			};
+<#
+				}
+				else
+				{
+#>
+			Disposing += _ => <#= prop.IsReadonly || prop.CustomImplementation ? prop.Name : prop.FieldName #>?.Dispose();
+<#
+				}
+			}
+#>
