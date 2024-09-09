@@ -46,7 +46,7 @@ namespace GenerationParams
 				prop.Name = p.Name;
 				prop.IsCollection = p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(IList<>);
 				Type propertyType = prop.IsCollection ? p.PropertyType.GenericTypeArguments[0] : p.PropertyType;
-				prop.Type = propertyType.FullName;
+				prop.Type = propertyType.ToPrettyString();
 				prop.CustomImplementation = HasAttribute(p, typeof(CustomImplementationAttribute));
 				prop.IsReadonly = p.SetMethod == null && !prop.IsCollection;
 				
