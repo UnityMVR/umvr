@@ -12,7 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4011b45bdad43c640ac46894f3d0177c, type: 3}
   m_Name: GeneratorSession
   m_EditorClassIdentifier: 
-  LastOutput: 
-  SelectedTypeString: 
-  _usedTemplate: {fileID: 0}
-  _availableModelNames: []
+  LastOutput: 'Model generated successfully!
+
+    ModelStub generated successfully!
+
+'
+  SelectedTypeString: INonPropertyMembersTest
+  _usedTemplate: {fileID: 11400000, guid: b3357045b82a9de4aa28f545cc45f9a2, type: 2}
+  _availableModelNames:
+  - None
+  - ICascadeDisposeTest
+  - ICollectionGenTest
+  - INonPropertyMembersTest
+  - IReadonlySingleGenTest
+  - ISingleGenTest
+  - ITestModel
+  - ITestCollection
+  - IGenTest
+  - ICollGenTest
+  - IFoo

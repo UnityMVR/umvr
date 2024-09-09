@@ -28,6 +28,12 @@ namespace GenerationParams
 			Constructors[0].BaseConstructor.Params.Add(new Parameter(typeof(Id)));
 			foreach (PropertyInfo p in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
 			{
+				if ((p.GetIndexParameters()?.Length ?? 0) > 0)
+				{
+					Indexers.Add(new Indexer(p));
+					continue;
+				}
+				
 				Property prop = new Property();
 				if (p.GetMethod == null)
 				{
@@ -88,6 +94,7 @@ namespace GenerationParams
 			
 			TryAddAdditionalParameters(type);
 			TryAddMethods(type);
+			TryAddEvents(type);
 		}
 
 		private void TryAddAdditionalParameters(MemberInfo type)
@@ -114,9 +121,21 @@ namespace GenerationParams
 			List<Method> methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
 				.Where(m => m.IsSpecialName == false)
 				.Select(m => new Method(m)).ToList();
-			if (methods?.Count > 0)
+			
+			if (methods.Count > 0)
 			{
 				Methods.AddRange(methods);
+			}
+		}
+		
+		private void TryAddEvents(Type type)
+		{
+			List<Event> events = type.GetEvents(BindingFlags.Public | BindingFlags.Instance).Where(e => e.IsSpecialName == false)
+				.Select(e => new Event(e)).ToList();
+			
+			if (events.Count > 0)
+			{
+				Events.AddRange(events);
 			}
 		}
 	}
