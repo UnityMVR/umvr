@@ -14,60 +14,51 @@ namespace GenTest
 {
 	public partial class GenericsTestModel : Model<GenericsTestModel>, IGenericsTest
 	{
-		private SingleProperty<System.Nullable<System.Int32>> _nullableInt;
-		public System.Nullable<System.Int32> NullableInt
+		private SingleProperty<System.Nullable<System.Int32>> _nullableIntProperty;
+		public System.Nullable<System.Int32> NullableIntProperty
 		{
-			get => _nullableInt.Value;
+			get => _nullableIntProperty.Value;
 			set
 			{
-				_nullableInt.Value = value;
+				_nullableIntProperty.Value = value;
 			}
 		}
 
-		private SingleProperty<System.Collections.Generic.HashSet<System.Int32>> _singleParam;
-		public System.Collections.Generic.HashSet<System.Int32> SingleParam
+		private CollectionProperty<System.Int32> _collection;
+		public IList<System.Int32> Collection
 		{
-			get => _singleParam.Value;
-			set
-			{
-				_singleParam.Value = value;
-			}
+			get => _collection.Collection;
+			set => _collection = new CollectionProperty<System.Int32>(nameof(Collection), _collection.Collection, value);
 		}
 
-		private SingleProperty<System.Collections.Generic.Dictionary<System.Int32,pindwin.umvr.example.IFoo>> _multipleParams;
-		public System.Collections.Generic.Dictionary<System.Int32,pindwin.umvr.example.IFoo> MultipleParams
+		private SingleProperty<System.Collections.Generic.IList<System.Int32>> _notCollection;
+		public System.Collections.Generic.IList<System.Int32> NotCollection
 		{
-			get => _multipleParams.Value;
+			get => _notCollection.Value;
 			set
 			{
-				_multipleParams.Value = value;
-			}
-		}
-
-		private SingleProperty<System.Collections.Generic.IDictionary<System.Int32,pindwin.umvr.example.IFoo>> _multipleParamsInterface;
-		public System.Collections.Generic.IDictionary<System.Int32,pindwin.umvr.example.IFoo> MultipleParamsInterface
-		{
-			get => _multipleParamsInterface.Value;
-			set
-			{
-				_multipleParamsInterface.Value = value;
+				_notCollection.Value = value;
 			}
 		}
 
 
 		public GenericsTestModel(pindwin.umvr.Model.Id id) : base(id)
 		{
-			_nullableInt = new SingleProperty<System.Nullable<System.Int32>>(nameof(NullableInt));
-			NullableInt = default;
+			// NullableInt not initialized because of custom implementation & initialization flag
 
-			_singleParam = new SingleProperty<System.Collections.Generic.HashSet<System.Int32>>(nameof(SingleParam));
-			SingleParam = default;
+			_nullableIntProperty = new SingleProperty<System.Nullable<System.Int32>>(nameof(NullableIntProperty));
+			NullableIntProperty = default;
 
-			_multipleParams = new SingleProperty<System.Collections.Generic.Dictionary<System.Int32,pindwin.umvr.example.IFoo>>(nameof(MultipleParams));
-			MultipleParams = default;
+			// SingleParam not initialized because of custom implementation & initialization flag
 
-			_multipleParamsInterface = new SingleProperty<System.Collections.Generic.IDictionary<System.Int32,pindwin.umvr.example.IFoo>>(nameof(MultipleParamsInterface));
-			MultipleParamsInterface = default;
+			// MultipleParams not initialized because of custom implementation & initialization flag
+
+			// MultipleParamsInterface not initialized because of custom implementation & initialization flag
+
+			_collection = new CollectionProperty<System.Int32>(nameof(Collection));
+
+			_notCollection = new SingleProperty<System.Collections.Generic.IList<System.Int32>>(nameof(NotCollection));
+			NotCollection = default;
 
 			RegisterDataStreams(this);
 		}
