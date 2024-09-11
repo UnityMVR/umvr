@@ -7,28 +7,29 @@ using pindwin.umvr.Attributes;
 using pindwin.umvr.Command;
 using pindwin.umvr.Model;
 
+// ReSharper disable once CheckNamespace
 namespace GenerationParams
 {
 	public class GenConcreteModel : GenType
 	{
 		public const string Format = "{0}Model";
 		
-		public ParametersCollection AdditionalParameters = new ParametersCollection();
+		public readonly ParametersCollection AdditionalParameters = new ();
 		public Type UnderlyingInterfaceType { get; }
 		
 		public GenConcreteModel(string @namespace, Type type, ILogger logger) 
-			: base($"{type.Name.Substring(1)}", Format, @namespace, new string[] { "public", "partial", "class" })
+			: base($"{type.Name.Substring(1)}", Format, @namespace, new [] { "public", "partial", "class" })
 		{
 			UnderlyingInterfaceType = type;
 			BaseTypes.AddRange(new []{new Parameter($"Model<{Type}>"), new Parameter($"I{Name}")});
 			
-			Constructors.Add(new Constructor(Type, new string[]{ "public" }));
+			Constructors.Add(new Constructor(Type, new []{ "public" }));
 			Constructors[0].Params.Add(new Parameter(typeof(Id)));
 			Constructors[0].BaseConstructor = new Constructor(BaseTypes[0].Type);
 			Constructors[0].BaseConstructor.Params.Add(new Parameter(typeof(Id)));
 			foreach (PropertyInfo p in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
 			{
-				if ((p.GetIndexParameters()?.Length ?? 0) > 0)
+				if (p.GetIndexParameters().Length > 0)
 				{
 					Indexers.Add(new Indexer(p));
 					continue;
@@ -43,10 +44,18 @@ namespace GenerationParams
 					continue;
 				}
 
+				bool isGenericProperty = HasAttribute(p, typeof(GenericPropertyAttribute));
+
+				if (isGenericProperty && !p.PropertyType.IsGenericType)
+				{
+					logger.Log($"[{typeof(GenericPropertyAttribute)}] detected on non-generic type. Attribute will be ignored.", LogSeverity.Warning);
+					isGenericProperty = false;
+				}
+				
 				prop.Name = p.Name;
-				prop.IsCollection = p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(IList<>);
+				prop.IsCollection = p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(IList<>) && !isGenericProperty;
 				Type propertyType = prop.IsCollection ? p.PropertyType.GenericTypeArguments[0] : p.PropertyType;
-				prop.Type = propertyType.FullName;
+				prop.Type = propertyType.ToPrettyString();
 				prop.CustomImplementation = HasAttribute(p, typeof(CustomImplementationAttribute));
 				prop.IsReadonly = p.SetMethod == null && !prop.IsCollection;
 				
@@ -87,6 +96,15 @@ namespace GenerationParams
 							   $"Property is not an IModel, so it's not possible to cascade dispose it.", LogSeverity.Warning);
 					
 					prop.CascadeDirection = CascadeDirection.None;
+				}
+
+				if (!prop.CustomImplementation && p.PropertyType.IsGenericType && !prop.IsModel && !prop.IsCollection && !isGenericProperty)
+				{
+					logger.Log($"Ignoring default value of {type.ToPrettyString()}.{p.Name} {typeof(CustomImplementationAttribute)}.{Environment.NewLine}" +
+					           $"Property is generic, but neither an IModel or IList, so it's not possible to deduct backing fields type." +
+					           $"Forcing custom implementation.", LogSeverity.Warning);
+					
+					prop.CustomImplementation = true;
 				}
 
 				Properties.Add(prop);
