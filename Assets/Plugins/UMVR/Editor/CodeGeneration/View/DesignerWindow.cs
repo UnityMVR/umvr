@@ -42,12 +42,13 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 			elementsRoot.makeItem = () =>
 			{
 				VisualElement element = new VisualElement();
-				element.Add(_parameter);
+				_parameterUXML.CloneTree(element);
+				paramFromUXML.style.flexGrow = new StyleFloat(1);
 				return element;
 			};
-			
-			elementsRoot.bindItem = (e, i) => e.Q<Label>().text = itemsSource[i];
-			elementsRoot.fixedItemHeight = 16;
+
+			elementsRoot.bindItem = (e, i) => e.Q<TextField>().SetValueWithoutNotify(itemsSource[i]);
+			elementsRoot.fixedItemHeight = 20;
 
 			elementsRoot.selectionType = SelectionType.Multiple;
 
