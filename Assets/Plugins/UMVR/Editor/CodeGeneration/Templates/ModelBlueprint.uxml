@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Template name="ParamsList" src="project://database/Assets/Plugins/UMVR/Editor/CodeGeneration/Templates/ParamsList.uxml?fileID=9197481963319205126&amp;guid=f0cb6c4ef33941d479c55714c4b4da6b&amp;type=3#ParamsList" />
+    <ui:TextField picking-mode="Ignore" label="Name" value="filler text" text="Model" name="Name" />
+    <ui:VisualElement name="MetaPropertiesGroup">
+        <ui:Toggle label="Singleton" name="IsSingleton" />
+        <ui:Instance template="ParamsList" name="AdditionalParameters" />
+    </ui:VisualElement>
+</ui:UXML>
