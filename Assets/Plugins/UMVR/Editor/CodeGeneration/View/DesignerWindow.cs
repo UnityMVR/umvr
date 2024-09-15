@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using pindwin.umvr.Editor.CodeGeneration.View.Parameters;
+using pindwin.umvr.Plugins.UMVR.Editor.CodeGeneration.Designer;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -35,7 +36,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 			labelFromUXML.style.flexGrow = new StyleFloat(1);
 			_root.Add(labelFromUXML);
 
-			var itemsSource = new List<string>() {string.Empty, String.Empty, String.Empty, String.Empty, String.Empty};
+			var itemsSource = new List<DesignerParameter> ();
 			var elementsRoot = _root.Q<ListView>("ParamsList");
 			elementsRoot.showAddRemoveFooter = true;
 			elementsRoot.itemsSource = itemsSource;
@@ -47,7 +48,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 				return element;
 			};
 
-			elementsRoot.bindItem = (e, i) => e.Q<TextField>().SetValueWithoutNotify(itemsSource[i]);
+			elementsRoot.bindItem = (e, i) => e.Q<ParamWidget>().SetValueWithoutNotify(itemsSource[i]);
 			elementsRoot.fixedItemHeight = 20;
 
 			elementsRoot.selectionType = SelectionType.Multiple;

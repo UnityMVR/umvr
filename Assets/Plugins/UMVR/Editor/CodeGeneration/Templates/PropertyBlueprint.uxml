@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="PropertyBlueprint">
+        <ui:VisualElement name="PropertyBlueprint-metadata-group" style="flex-direction: row;">
+            <pindwin.umvr.Editor.CodeGeneration.View.Parameters.ParamWidget name="PropertyBlueprint-metadata-param" />
+            <ui:Label text="IsCollection" display-tooltip-when-elided="true" name="PropertyBlueprint-metadata-isCollection-label" />
+            <ui:Toggle name="PropertyBlueprint-metadata-isCollection" />
+        </ui:VisualElement>
+        <ui:VisualElement name="PropertyBlueprint-attributes-group">
+            <ui:DropdownField label="InitializationLevel" index="0" choices="Default,Explicit,Skip" name="PropertyBlueprint-attributes-InitLevel" />
+            <ui:Toggle label="IsReadonly" name="PropertyBlueprint-attributes-IsReadonly" />
+            <ui:Toggle label="Custom Implementation" name="PropertyBlueprint-attributes-CustomImplementation" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

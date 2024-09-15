@@ -1,7 +1,6 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.IO;
-using System.Threading.Tasks;
 using pindwin.umvr.Editor.Generation;
 
 namespace pindwin.umvr.Editor.CodeGeneration
