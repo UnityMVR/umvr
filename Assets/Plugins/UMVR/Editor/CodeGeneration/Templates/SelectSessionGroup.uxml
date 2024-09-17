@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:VisualElement name="SelectSessionGroup">
         <ui:DropdownField label="Selected session:" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="SessionsDropdown" />
     </ui:VisualElement>

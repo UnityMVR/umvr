@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7469ae39104344b8f8acfb5cf7efb0, type: 3}
+  m_Name: DesignerViewResources
+  m_EditorClassIdentifier: 
+  _parameterUXML: {fileID: 9197481963319205126, guid: 462cbfa86546c314a840bee27cdc356b, type: 3}
+  _propertyUXML: {fileID: 9197481963319205126, guid: 991cd50561026fa488fdf56c6ba1a9e1, type: 3}

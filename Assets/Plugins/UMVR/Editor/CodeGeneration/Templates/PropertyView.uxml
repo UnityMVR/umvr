@@ -9,6 +9,7 @@
             <ui:DropdownField label="InitializationLevel" index="0" choices="Default,Explicit,Skip" name="PropertyBlueprint-attributes-InitLevel" />
             <ui:Toggle label="IsReadonly" name="PropertyBlueprint-attributes-IsReadonly" />
             <ui:Toggle label="Custom Implementation" name="PropertyBlueprint-attributes-CustomImplementation" />
+            <ui:Toggle label="Generic Property" name="PropertyBlueprint-attributes-GenericProperty" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

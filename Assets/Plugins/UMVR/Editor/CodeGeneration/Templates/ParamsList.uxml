@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <ui:VisualElement name="ParamsListGroup">
         <ui:ListView focusable="true" name="ParamsList" header-title="Params" show-foldout-header="true" show-border="true" show-add-remove-footer="true" />
     </ui:VisualElement>

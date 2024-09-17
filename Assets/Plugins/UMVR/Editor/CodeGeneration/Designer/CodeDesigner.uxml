@@ -1,4 +1,6 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance"
+         engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:Template name="CodeGenWindow" src="project://database/Assets/Plugins/UMVR/Editor/CodeGeneration/View/CodeGenWindow.uxml?fileID=9197481963319205126&amp;guid=ef0ac426d399f2a4eaeb1135c89e06a9&amp;type=3#CodeGenWindow" />
     <ui:Instance template="CodeGenWindow" name="CodeGenWindow" />
 </ui:UXML>

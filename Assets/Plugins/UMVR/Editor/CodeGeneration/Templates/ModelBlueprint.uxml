@@ -5,4 +5,5 @@
         <ui:Toggle label="Singleton" name="IsSingleton" />
         <ui:Instance template="ParamsList" name="AdditionalParameters" />
     </ui:VisualElement>
+    <pindwin.umvr.Editor.CodeGeneration.Window.Properties.PropertyWidget />
 </ui:UXML>
