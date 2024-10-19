@@ -83,7 +83,6 @@ namespace GenerationParams
 				}
 
 				prop.IsModel = typeof(IModel).IsAssignableFrom(propertyType);
-				prop.IsCommand = typeof(ICommand).IsAssignableFrom(propertyType);
 
 				var cascade = (CascadeDisposeAttribute) Attribute.GetCustomAttribute(
 					p,
@@ -118,11 +117,11 @@ namespace GenerationParams
 		private void TryAddAdditionalParameters(MemberInfo type)
 		{
 			int count = default;
-			List<Parameter> parameters = ((AdditionalParametersAttribute) Attribute.GetCustomAttribute(
-					type,
-					typeof(AdditionalParametersAttribute)
-				))?.Types.Select(p => new Parameter(p.FullName, $"param{count++}")).ToList();
-			if (parameters == null)
+			List<Parameter> parameters = Attribute.GetCustomAttributes(type, typeof(AdditionalParameterAttribute)).
+				Cast<AdditionalParameterAttribute>().
+				Select(p => new Parameter(p.Type.FullName, p.Name ?? $"param{count++}"))
+				.ToList();
+			if (parameters.Count == 0)
 			{
 				return;
 			}

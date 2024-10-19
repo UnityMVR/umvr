@@ -4,7 +4,7 @@ using pindwin.umvr.Model;
 
 namespace Tests.Generator
 {
-	[AdditionalParameters(typeof(float))]
+	[AdditionalParameter(typeof(float))]
 	internal interface IGenTest : IModel
 	{
 		int SimpleProperty { get; set; }

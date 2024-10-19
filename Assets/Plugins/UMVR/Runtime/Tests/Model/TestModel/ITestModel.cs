@@ -3,7 +3,7 @@ using pindwin.umvr.Model;
 
 namespace Model.TestModel
 {
-	[AdditionalParameters(typeof(int))]
+	[AdditionalParameter(typeof(int), "param1")]
 	public interface ITestModel : IModel
 	{
 		int IntField { get; }
