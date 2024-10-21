@@ -1,6 +1,6 @@
 using pindwin.umvr.Attributes;
 
-namespace pindwin.umvr.Plugins.UMVR.Editor.CodeGeneration.Designer
+namespace pindwin.umvr.Editor.CodeGeneration.Designer
 {
     public class DesignerProperty
     {

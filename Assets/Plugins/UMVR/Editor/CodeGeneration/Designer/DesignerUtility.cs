@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 
-namespace pindwin.umvr.Plugins.UMVR.Editor.CodeGeneration.Designer
+namespace pindwin.umvr.Editor.CodeGeneration.Designer
 {
 	public static class DesignerUtility
 	{

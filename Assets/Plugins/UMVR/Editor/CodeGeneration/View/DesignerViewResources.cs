@@ -8,8 +8,10 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
     {
         [SerializeField] private VisualTreeAsset _parameterUXML;
         [SerializeField] private VisualTreeAsset _propertyUXML;
+        [SerializeField] private VisualTreeAsset _methodUXML;
 
         public VisualTreeAsset ParameterUXML => _parameterUXML;
         public VisualTreeAsset PropertyUXML => _propertyUXML;
+        public VisualTreeAsset MethodUXML => _methodUXML;
     }
 }

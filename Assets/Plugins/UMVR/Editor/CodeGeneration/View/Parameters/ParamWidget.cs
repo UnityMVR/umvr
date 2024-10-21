@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using pindwin.umvr.Plugins.UMVR.Editor.CodeGeneration.Designer;
+using pindwin.umvr.Editor.CodeGeneration.Designer;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 

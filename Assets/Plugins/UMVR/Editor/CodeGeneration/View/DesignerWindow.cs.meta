@@ -7,6 +7,8 @@ MonoImporter:
   - m_ViewDataDictionary: {instanceID: 0}
   - _designerWindowUXML: {fileID: 9197481963319205126, guid: 8ca2841ee6bb7d84d95f13ee59f6c24f, type: 3}
   - _parameterUXML: {fileID: 9197481963319205126, guid: 462cbfa86546c314a840bee27cdc356b, type: 3}
+  - _propertyUXML: {fileID: 9197481963319205126, guid: baa09ddb5bc39cd46a590a8984f98480, type: 3}
+  - _methodUXML: {fileID: 9197481963319205126, guid: afaf1f7ffa3643d48b6c641df6385fc3, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

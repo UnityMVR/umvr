@@ -1,9 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:Template name="ParamsList" src="project://database/Assets/Plugins/UMVR/Editor/CodeGeneration/Templates/ParamsList.uxml?fileID=9197481963319205126&amp;guid=f0cb6c4ef33941d479c55714c4b4da6b&amp;type=3#ParamsList" />
+    <ui:Template name="ParamsList" src="project://database/Assets/Plugins/UMVR/Editor/CodeGeneration/View/Parameters/ParamsList.uxml?fileID=9197481963319205126&amp;guid=f0cb6c4ef33941d479c55714c4b4da6b&amp;type=3#ParamsList" />
     <ui:TextField picking-mode="Ignore" label="Name" value="filler text" text="Model" name="Name" />
     <ui:VisualElement name="MetaPropertiesGroup">
         <ui:Toggle label="Singleton" name="IsSingleton" />
         <ui:Instance template="ParamsList" name="AdditionalParameters" />
     </ui:VisualElement>
-    <pindwin.umvr.Editor.CodeGeneration.Window.Properties.PropertyWidget />
+    <ui:VisualElement name="PropertiesGroup">
+        <ui:ListView focusable="true" name="PropertiesList" show-bound-collection-size="true" show-foldout-header="true" show-add-remove-footer="true" header-title="Properties" show-alternating-row-backgrounds="All" show-border="true" />
+    </ui:VisualElement>
+    <ui:VisualElement name="MethodsGroup">
+        <ui:ListView focusable="true" name="MethodsList" show-bound-collection-size="true" show-foldout-header="true" show-add-remove-footer="true" header-title="Methods" show-alternating-row-backgrounds="All" show-border="true" />
+    </ui:VisualElement>
 </ui:UXML>

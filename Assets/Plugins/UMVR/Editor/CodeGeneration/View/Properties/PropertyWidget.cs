@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using pindwin.umvr.Attributes;
+using pindwin.umvr.Editor.CodeGeneration.Designer;
 using pindwin.umvr.Editor.CodeGeneration.View.Parameters;
-using pindwin.umvr.Plugins.UMVR.Editor.CodeGeneration.Designer;
 using UnityEngine.UIElements;
 
-namespace pindwin.umvr.Editor.CodeGeneration.Window.Properties
+namespace pindwin.umvr.Editor.CodeGeneration.View.Properties
 {
     public class PropertyWidget : BindableElement, INotifyValueChanged<DesignerProperty>
     {

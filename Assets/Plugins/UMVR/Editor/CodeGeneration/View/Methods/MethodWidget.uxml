@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Label text="Signature" display-tooltip-when-elided="true" name="method-label-signature" />
+    <pindwin.umvr.Editor.CodeGeneration.View.Parameters.ParamWidget name="method-param-signature" />
+    <ui:Label text="Parameters" display-tooltip-when-elided="true" name="method-label-params" />
+    <ui:ListView focusable="true" name="method-listView-params" />
+</ui:UXML>
