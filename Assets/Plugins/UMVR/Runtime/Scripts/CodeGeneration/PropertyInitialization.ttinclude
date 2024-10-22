@@ -10,7 +10,7 @@
 			// <#= prop.Name #> not initialized because of custom implementation & initialization flag
 <#
 	}
-	else if (prop.IsCommand || prop.IsReadonly)
+	else if (prop.IsReadonly)
 	{
 #>
 			<#= prop.Name #> = <#= prop.FieldName.Substring(1) #>;

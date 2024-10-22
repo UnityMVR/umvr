@@ -11,7 +11,7 @@ if (prop.CustomImplementation)
 }
 #>
 <#
-if (prop.IsReadonly == false && prop.IsCommand == false)
+if (prop.IsReadonly == false)
 {
 #>
 		private <#= prop.IsModel ? "Model" : "" #><#= prop.IsCollection ? "Collection" : "Single" #>Property<<#= prop.Type #>> <#= prop.FieldName #>;
@@ -21,7 +21,7 @@ if (prop.IsReadonly == false && prop.IsCommand == false)
 		<#= prop.Signature #>
 		{
 <#
-if(prop.IsReadonly || prop.IsCommand) 
+if(prop.IsReadonly) 
 { 
 #>
 			get; <#= prop.IsReadonly ? "private" : "" #> set;
