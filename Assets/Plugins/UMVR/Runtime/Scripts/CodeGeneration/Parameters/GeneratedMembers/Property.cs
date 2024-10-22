@@ -56,7 +56,7 @@ namespace GenerationParams
 			IsReadonly = info.SetMethod == null && !IsCollection;
 			InitializationLevel = HasAttribute(info, typeof(InitializationAttribute)) 
 				? ((InitializationAttribute)Attribute.GetCustomAttribute(info, typeof(InitializationAttribute))).Level 
-				: InitializationLevel.Explicit;
+				: IsReadonly ? InitializationLevel.Explicit : IsCollection ? InitializationLevel.Skip : InitializationLevel.Default;
 			
 			IsModel = typeof(IModel).IsAssignableFrom(propType);
 			CascadeDirection = HasAttribute(info, typeof(CascadeDisposeAttribute)) 

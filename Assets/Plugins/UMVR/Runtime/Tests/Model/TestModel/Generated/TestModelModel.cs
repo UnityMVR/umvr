@@ -40,7 +40,7 @@ namespace Model.TestModel
 		}
 
 
-		public TestModelModel(pindwin.umvr.Model.Id id, System.Int32 intField, System.String explicitlyInitializedStringField, System.Int32 param0) : base(id)
+		public TestModelModel(pindwin.umvr.Model.Id id, System.Int32 intField, System.String explicitlyInitializedStringField, System.Int32 param1) : base(id)
 		{
 			IntField = intField;
 
@@ -50,8 +50,7 @@ namespace Model.TestModel
 			_explicitlyInitializedStringField = new SingleProperty<System.String>(nameof(ExplicitlyInitializedStringField));
 			ExplicitlyInitializedStringField = explicitlyInitializedStringField;
 
-			_stubbedStringField = new SingleProperty<System.String>(nameof(StubbedStringField));
-			StubbedStringField = default;
+			// StubbedStringField not initialized because of custom implementation & initialization flag
 
 			RegisterDataStreams(this);
 		}

@@ -22,7 +22,7 @@ namespace GenerationParams
 			Name = name;
 			Namespace = @namespace;
 			
-			GenConcreteModel = new GenConcreteModel(@namespace, new Model(interfaceType), loggers.TryGetValue("Model", out var logger) ? logger : new NullLogger());
+			GenConcreteModel = new GenConcreteModel(@namespace, new Model(interfaceType));
 			GenConcreteFactory = new GenConcreteFactory(GenConcreteModel);
 			GenReactor = new GenReactor(GenConcreteModel);
 			GenReactorFactory = new GenReactorFactory(GenConcreteModel);

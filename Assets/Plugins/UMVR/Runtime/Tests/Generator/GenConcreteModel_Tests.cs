@@ -2,7 +2,6 @@
 using System.Linq;
 using GenerationParams;
 using NUnit.Framework;
-using pindwin.development;
 using pindwin.umvr.Attributes;
 
 namespace Tests.Generator
@@ -16,8 +15,8 @@ namespace Tests.Generator
 		[SetUp]
 		public void SetUp()
 		{
-			_propertiesModel = new GenConcreteModel(Namespace, new GenerationParams.Model(typeof(IGenTest)), new NullLogger());
-			_collectionsModel = new GenConcreteModel(Namespace, new GenerationParams.Model(typeof(ICollGenTest)), new NullLogger());
+			_propertiesModel = new GenConcreteModel(Namespace, new GenerationParams.Model(typeof(IGenTest)));
+			_collectionsModel = new GenConcreteModel(Namespace, new GenerationParams.Model(typeof(ICollGenTest)));
 		}
 
 		[TestCase(nameof(ICollGenTest.SimpleProperty), false, false, false, InitializationLevel.Default)]
