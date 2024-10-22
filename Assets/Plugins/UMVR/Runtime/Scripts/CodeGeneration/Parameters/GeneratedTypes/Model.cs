@@ -11,6 +11,7 @@ namespace GenerationParams
 {
 	public class Model
 	{
+		public Type UnderlyingType { get; set; }
 		public string Name { get; set; }
 		public bool IsSingleton { get; set; }
 		public List<Parameter> AdditionalParameters { get; set; }
@@ -23,6 +24,7 @@ namespace GenerationParams
 		{
 			AssertArgument(type);
 			
+			UnderlyingType = type;
 			Name = type.MakeClassName();
 			IsSingleton = type.GetCustomAttribute<SingletonAttribute>() != null;
 			
@@ -55,7 +57,7 @@ namespace GenerationParams
 
 		private static void AssertArgument(Type interfaceType)
 		{
-			if (!interfaceType.IsAssignableFrom(typeof(IModel)) || !interfaceType.IsInterface)
+			if (!typeof(IModel).IsAssignableFrom(interfaceType) || !interfaceType.IsInterface)
 			{
 				throw new UMVRException("Provided type is not an interface or does not inherit from IModel.");
 			}

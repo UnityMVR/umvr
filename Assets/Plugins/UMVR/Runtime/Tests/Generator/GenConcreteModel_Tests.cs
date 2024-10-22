@@ -16,8 +16,8 @@ namespace Tests.Generator
 		[SetUp]
 		public void SetUp()
 		{
-			_propertiesModel = new GenConcreteModel(Namespace, typeof(IGenTest), new NullLogger());
-			_collectionsModel = new GenConcreteModel(Namespace, typeof(ICollGenTest), new NullLogger());
+			_propertiesModel = new GenConcreteModel(Namespace, new GenerationParams.Model(typeof(IGenTest)), new NullLogger());
+			_collectionsModel = new GenConcreteModel(Namespace, new GenerationParams.Model(typeof(ICollGenTest)), new NullLogger());
 		}
 
 		[TestCase(nameof(ICollGenTest.SimpleProperty), false, false, false, InitializationLevel.Default)]
