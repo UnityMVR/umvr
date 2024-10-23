@@ -98,6 +98,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 			root.Insert(root.childCount - 1, element);
 			
 			MethodWidget methodWidget = element.Q<MethodWidget>();
+			methodWidget.RegisterValueChangedCallback(e => _selectedMethod = method);
 			methodWidget.Parameters = method.Parameters;
 			_methods.Add(method, element);
 			_selectedMethod = method;
@@ -105,6 +106,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 
 		private void RemoveMethod(VisualElement root, DesignerMethod method)
 		{
+
 			if (_methods.TryGetValue(method, out var widget))
 			{
 				root.Remove(widget);

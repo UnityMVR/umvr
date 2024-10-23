@@ -23,6 +23,11 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             this.style.flexGrow = 1.0f;
             
             _signatureWidget = this.Q<ParamWidget>("method-param-signature");
+            _signatureWidget.RegisterValueChangedCallback(evt =>
+            {
+                value = new DesignerMethod(evt.newValue.Name, evt.newValue.Type, _parameters);
+            });
+            
             _parametersList = this.Q<ListView>("method-listView-params");
             InitializeListView<ParamWidget>(DesignerUtility.DesignerViewResources.ParameterUXML);
         }
@@ -85,7 +90,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             _parametersList.selectionType = SelectionType.Single;
         }
 
-        DesignerMethod INotifyValueChanged<DesignerMethod>.value
+        public DesignerMethod value
         {
             get => new (MethodName, MethodReturnType, _parameters);
             set
