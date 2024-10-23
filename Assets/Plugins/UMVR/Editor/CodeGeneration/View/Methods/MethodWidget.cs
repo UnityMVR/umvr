@@ -20,6 +20,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             }
             
             DesignerUtility.DesignerViewResources.MethodUXML.CloneTree(this);
+            this.style.flexGrow = 1.0f;
             
             _signatureWidget = this.Q<ParamWidget>("method-param-signature");
             _parametersList = this.Q<ListView>("method-listView-params");
@@ -59,18 +60,6 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
                 _parametersList.itemsSource = value;
             }
         }
-
-        public void AddParameter(DesignerParameter parameter)
-        {
-            _parameters.Add(parameter);
-            _parametersList.RefreshItems();
-        }
-        
-        public void RemoveParameter(DesignerParameter parameter)
-        {
-            _parameters.Remove(parameter);
-            _parametersList.RefreshItems();
-        }
         
         private void InitializeListView<TWidgetType>(VisualTreeAsset elementUXML) 
             where TWidgetType : VisualElement, INotifyValueChanged<DesignerParameter>
@@ -93,7 +82,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             _parametersList.style.flexDirection = FlexDirection.Column;
             _parametersList.style.flexGrow = 1.0f;
 
-            _parametersList.selectionType = SelectionType.Multiple;
+            _parametersList.selectionType = SelectionType.Single;
         }
 
         DesignerMethod INotifyValueChanged<DesignerMethod>.value
