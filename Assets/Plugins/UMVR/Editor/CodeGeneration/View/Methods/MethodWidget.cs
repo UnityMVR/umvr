@@ -33,7 +33,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             });
             
             _parametersList = this.Q<ListView>("method-listView-params");
-            InitializeListView<ParamWidget>(DesignerUtility.DesignerViewResources.ParameterUXML);
+            InitializeListView(DesignerUtility.DesignerViewResources.ParameterUXML);
         }
         
         public string MethodName
@@ -75,8 +75,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             }
         }
         
-        private void InitializeListView<TWidgetType>(VisualTreeAsset elementUXML) 
-            where TWidgetType : VisualElement, INotifyValueChanged<DesignerParameter>
+        private void InitializeListView(VisualTreeAsset elementUXML)
         {
             _parametersList.showAddRemoveFooter = true;
             _parametersList.makeItem = () =>
@@ -89,8 +88,15 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
 
             _parametersList.bindItem = (e, i) =>
             {
-                var w = e.Q<TWidgetType>();
+                var w = e.Q<ParamWidget>();
                 w.SetValueWithoutNotify(_parameters[i]);
+                w.RegisterValueChangedCallback(RefreshParameter);
+            };
+            
+            _parametersList.unbindItem = (e, _) =>
+            {
+                var w = e.Q<ParamWidget>();
+                w.UnregisterValueChangedCallback(RefreshParameter);
             };
 			
             _parametersList.style.flexDirection = FlexDirection.Column;
@@ -121,6 +127,12 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             _parameters = newValue?.Parameters ?? new List<DesignerParameter>();
 			
             MarkDirtyRepaint();
+        }
+
+        private void RefreshParameter(ChangeEvent<DesignerParameter> parameter)
+        {
+            int index = _parameters.FindIndex(p => p == parameter.previousValue);
+            _parameters[index] = parameter.newValue;
         }
         
         public new class UxmlFactory : UxmlFactory<MethodWidget, UxmlTraits> { }

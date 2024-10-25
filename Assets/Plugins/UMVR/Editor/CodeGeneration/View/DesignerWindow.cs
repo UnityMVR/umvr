@@ -23,8 +23,8 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 		
 		private Button _addMethodButton;
 		private Button _removeMethodButton;
-		private Dictionary<DesignerMethod, VisualElement> _methods = new ();
 		private DesignerMethod _selectedMethod;
+		private readonly Dictionary<DesignerMethod, VisualElement> _methods = new ();
 
 		[MenuItem("Tools/UMVR/Designer")]
 		public static void OpenWindow()
@@ -51,7 +51,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 			InitializeButton("MethodsRemoveButton", () => RemoveMethod(methodsRoot, _selectedMethod));
 		}
 
-		private ListView InitializeListView<TElementType, TWidgetType>(VisualTreeAsset elementUXML, string listElementName, float height = 20.0f, Action<TWidgetType> initAction = null) 
+		private void InitializeListView<TElementType, TWidgetType>(VisualTreeAsset elementUXML, string listElementName, float height = 20.0f, Action<TWidgetType> initAction = null) 
 			where TWidgetType : VisualElement, INotifyValueChanged<TElementType>
 		{
 			var itemsSource = new List<TElementType>();
@@ -79,16 +79,14 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 
 			elementsRoot.selectionType = SelectionType.Multiple;
 
-			elementsRoot.onItemsChosen += objects => Debug.Log(objects);
-			elementsRoot.onSelectionChange += objects => Debug.Log(objects);
-			return elementsRoot;
+			elementsRoot.onItemsChosen += Debug.Log;
+			elementsRoot.onSelectionChange += Debug.Log;
 		}
 		
-		private Button InitializeButton(string buttonName, Action onClick)
+		private void InitializeButton(string buttonName, Action onClick)
 		{
 			var button = _root.Q<Button>(buttonName);
 			button.clickable.clicked += onClick;
-			return button;
 		}
 
 		private void AddMethod(VisualElement root, DesignerMethod method)
@@ -98,7 +96,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 			root.Insert(root.childCount - 1, element);
 			
 			MethodWidget methodWidget = element.Q<MethodWidget>();
-			methodWidget.RegisterValueChangedCallback(e => _selectedMethod = method);
+			methodWidget.RegisterValueChangedCallback(_ => _selectedMethod = method);
 			methodWidget.Parameters = method.Parameters;
 			_methods.Add(method, element);
 			_selectedMethod = method;
@@ -106,7 +104,6 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 
 		private void RemoveMethod(VisualElement root, DesignerMethod method)
 		{
-
 			if (_methods.TryGetValue(method, out var widget))
 			{
 				root.Remove(widget);
