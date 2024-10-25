@@ -33,7 +33,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 					maxWidth = new StyleLength(new Length(50.0f, LengthUnit.Percent))
 				}
 			};
-			_typeField.RegisterValueChangedCallback(evt => value = new DesignerParameter(ParamType, evt.newValue));
+			_typeField.RegisterValueChangedCallback(evt => value = new DesignerParameter(ParamName, evt.newValue));
 			
 			Add(_typeField);
 
@@ -46,7 +46,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 					maxWidth = new StyleLength(new Length(50.0f, LengthUnit.Percent))
 				}
 			};
-			_nameField.RegisterValueChangedCallback(evt => value = new DesignerParameter(evt.newValue, ParamName));
+			_nameField.RegisterValueChangedCallback(evt => value = new DesignerParameter(evt.newValue, ParamType));
 			
 			Add(_nameField);
 		}

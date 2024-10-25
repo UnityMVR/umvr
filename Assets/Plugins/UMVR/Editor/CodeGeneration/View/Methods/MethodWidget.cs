@@ -9,6 +9,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
     {
         private readonly ParamWidget _signatureWidget;
         private readonly ListView _parametersList;
+        private readonly Foldout _foldout;
         
         private List<DesignerParameter> _parameters;
 
@@ -20,12 +21,15 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             }
             
             DesignerUtility.DesignerViewResources.MethodUXML.CloneTree(this);
-            this.style.flexGrow = 1.0f;
+            style.flexGrow = 1.0f;
+            
+            _foldout = this.Q<Foldout>("method-blueprint");
             
             _signatureWidget = this.Q<ParamWidget>("method-param-signature");
             _signatureWidget.RegisterValueChangedCallback(evt =>
             {
                 value = new DesignerMethod(evt.newValue.Name, evt.newValue.Type, _parameters);
+                _foldout.text = evt.newValue.Name;
             });
             
             _parametersList = this.Q<ListView>("method-listView-params");
@@ -40,6 +44,11 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
                 if (_signatureWidget != null)
                 {
                     _signatureWidget.ParamName = value;
+                }
+
+                if (_foldout != null)
+                {
+                    _foldout.text = value;
                 }
             }
         }
