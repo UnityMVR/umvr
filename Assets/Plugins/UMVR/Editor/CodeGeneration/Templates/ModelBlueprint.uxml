@@ -8,7 +8,11 @@
     <ui:VisualElement name="PropertiesGroup" style="flex-grow: 0;">
         <ui:ListView focusable="true" name="PropertiesList" show-bound-collection-size="true" show-foldout-header="true" show-add-remove-footer="true" header-title="Properties" show-alternating-row-backgrounds="All" show-border="true" style="flex-grow: 0;" />
     </ui:VisualElement>
-    <ui:VisualElement name="MethodsGroup" style="flex-grow: 0;">
-        <ui:ListView focusable="true" name="MethodsList" show-bound-collection-size="true" show-foldout-header="true" show-add-remove-footer="true" header-title="Methods" show-alternating-row-backgrounds="All" show-border="true" style="flex-grow: 0;" />
+    <ui:VisualElement name="MethodsGroup" style="flex-grow: 1;">
+        <ui:Label text="Methods" display-tooltip-when-elided="true" name="MethodsGroupLabel" />
+        <ui:VisualElement name="MethodButtonsGroup" style="flex-direction: row;">
+            <ui:Button text="Add" display-tooltip-when-elided="true" name="MethodsAddButton" style="flex-grow: 1;" />
+            <ui:Button text="Remove" display-tooltip-when-elided="true" name="MethodsRemoveButton" style="flex-grow: 1;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
