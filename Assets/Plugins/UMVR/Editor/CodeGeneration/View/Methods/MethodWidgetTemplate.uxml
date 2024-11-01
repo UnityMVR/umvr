@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <ui:Foldout text="MethodName" name="method-blueprint" style="flex-grow: 1;">
-        <pindwin.umvr.Editor.CodeGeneration.View.Parameters.ParamWidget name="method-param-signature" />
+        <pindwin.umvr.Editor.CodeGeneration.View.Parameters.UnconstrainedParamWidget name="method-param-signature" />
         <ui:Label text="Parameters" display-tooltip-when-elided="true" name="method-label-params" />
         <ui:ListView focusable="true" name="method-listView-params" style="flex-grow: 1;" />
     </ui:Foldout>

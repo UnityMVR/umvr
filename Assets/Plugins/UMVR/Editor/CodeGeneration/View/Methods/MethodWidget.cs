@@ -7,7 +7,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
 {
     public class MethodWidget : BindableElement, INotifyValueChanged<DesignerMethod>
     {
-        private readonly ParamWidget _signatureWidget;
+        private readonly UnconstrainedParamWidget _signatureWidget;
         private readonly ListView _parametersList;
         private readonly Foldout _foldout;
         
@@ -25,7 +25,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             
             _foldout = this.Q<Foldout>("method-blueprint");
             
-            _signatureWidget = this.Q<ParamWidget>("method-param-signature");
+            _signatureWidget = this.Q<UnconstrainedParamWidget>("method-param-signature");
             _signatureWidget.RegisterValueChangedCallback(evt =>
             {
                 value = new DesignerMethod(evt.newValue.Name, evt.newValue.Type, _parameters);

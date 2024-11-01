@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="UnconstrainedParam" style="flex-direction: row; flex-grow: 0;">
+        <pindwin.umvr.Editor.CodeGeneration.View.AssistedTextFields.AssistedTextFieldWidget name="up-type-field" grace-period-length="3" style="flex-grow: 1; flex-direction: column; max-width: 50%;" />
+        <ui:TextField picking-mode="Ignore" value="filler text" name="up-name-field" style="flex-grow: 1; flex-shrink: 1; max-width: 50%;" />
+    </ui:VisualElement>
+</ui:UXML>

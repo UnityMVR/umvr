@@ -23,37 +23,47 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.AssistedTextFields
 			DesignerUtility.DesignerViewResources.AssistedTextField.CloneTree(this);
 
 			_input = this.Q<TextField>("atf-text-field");
-			_input.RegisterValueChangedCallback(OnInputValueChanged);
 			_assistanceGroup = this.Q<VisualElement>("atf-selection-root");
 			_proposedValues = this.Q<ListView>("atf-proposed-items");
 			
 			InitializeListView();
 		}
 
-		private void OnInputValueChanged(ChangeEvent<string> evt)
+		public void RefreshListDisplay()
 		{
 			_assistanceGroup.style.display =
-				evt.newValue.Length > GracePeriodLength && _options.Count > 0 
-					? DisplayStyle.Flex 
+				_input.value.Length >= GracePeriodLength && _options.Count > 0
+					? DisplayStyle.Flex
 					: DisplayStyle.None;
+			
+			_proposedValues.RefreshItems();
 		}
-
-		public void SetValueWithoutNotify(string newValue)
-		{
-			_input.SetValueWithoutNotify(newValue);
-		}
-
-		public string value
+		
+		public string TextValue
 		{
 			get => _input.value;
 			set => _input.value = value;
 		}
 
-		public int GracePeriodLength
+		public void SetValueWithoutNotify(string newValue)
 		{
-			get;
-			set;
+			_input.SetValueWithoutNotify(newValue ?? string.Empty);
 		}
+
+		string INotifyValueChanged<string>.value
+		{
+			get => _input.value;
+			set
+			{
+				using var pooled = ChangeEvent<string>.GetPooled(_input.value, value);
+
+				pooled.target = this;
+				SetValueWithoutNotify(value);
+				SendEvent(pooled);
+			}
+		}
+
+		public int GracePeriodLength { get; set; }
         
 		public List<string> Options
 		{
@@ -78,13 +88,21 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.AssistedTextFields
 
 			_proposedValues.bindItem = (e, i) =>
 			{
-				var w = e.Q<Label>();
-				w.text = _proposedValues.itemsSource[i].ToString();
+				var w = e.Q<Label>() as INotifyValueChanged<string>;
+				w.SetValueWithoutNotify(_proposedValues.itemsSource[i].ToString());
+				
+				_proposedValues.MarkDirtyRepaint();
+			};
+			
+			_proposedValues.unbindItem = (e, i) =>
+			{
+				_proposedValues.MarkDirtyRepaint();
 			};
 
 			_proposedValues.onSelectionChange += o =>
 			{
 				SetValueWithoutNotify(o.Single().ToString());
+				_assistanceGroup.style.display = DisplayStyle.None;
 			};
 			
 			_proposedValues.style.flexDirection = FlexDirection.Column;
