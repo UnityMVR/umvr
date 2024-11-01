@@ -15,3 +15,4 @@ MonoBehaviour:
   _parameterUXML: {fileID: 9197481963319205126, guid: 462cbfa86546c314a840bee27cdc356b, type: 3}
   _propertyUXML: {fileID: 9197481963319205126, guid: 991cd50561026fa488fdf56c6ba1a9e1, type: 3}
   _methodUXML: {fileID: 9197481963319205126, guid: ee6a4b5334fd7f24db3dcbfb5130b655, type: 3}
+  _assistedTextFieldUXML: {fileID: 9197481963319205126, guid: 66d226a93e66bd5438e084c2e03111f9, type: 3}
