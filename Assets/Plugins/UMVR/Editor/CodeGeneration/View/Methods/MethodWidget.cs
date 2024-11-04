@@ -11,9 +11,9 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
         private readonly ListView _parametersList;
         private readonly Foldout _foldout;
         
-        private List<DesignerParameter> _parameters;
+        private List<DesignerSignature> _parameters;
 
-        public MethodWidget()
+        public MethodWidget(string type, string name)
         {
             if (DesignerUtility.DesignerViewResources.MethodUXML == null)
             {
@@ -26,6 +26,8 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             _foldout = this.Q<Foldout>("method-blueprint");
             
             _signatureWidget = this.Q<UnconstrainedParamWidget>("method-param-signature");
+            _signatureWidget.ParamType = type;
+            _signatureWidget.ParamName = _foldout.text = name;
             _signatureWidget.RegisterValueChangedCallback(evt =>
             {
                 value = new DesignerMethod(evt.newValue.Name, evt.newValue.Type, _parameters);
@@ -33,8 +35,11 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             });
             
             _parametersList = this.Q<ListView>("method-listView-params");
-            InitializeListView(DesignerUtility.DesignerViewResources.ParameterUXML);
+            InitializeListView();
         }
+        
+        public MethodWidget() : this(string.Empty, string.Empty)
+        { }
         
         public string MethodName
         {
@@ -65,7 +70,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             }
         }
         
-        public List<DesignerParameter> Parameters
+        public List<DesignerSignature> Parameters
         {
             get => _parameters;
             set
@@ -75,27 +80,26 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
             }
         }
         
-        private void InitializeListView(VisualTreeAsset elementUXML)
+        private void InitializeListView()
         {
             _parametersList.showAddRemoveFooter = true;
             _parametersList.makeItem = () =>
             {
-                VisualElement element = new VisualElement();
-                elementUXML.CloneTree(element);
+                VisualElement element = new UnconstrainedParamWidget();
                 element.style.flexGrow = new StyleFloat(1);
                 return element;
             };
 
             _parametersList.bindItem = (e, i) =>
             {
-                var w = e.Q<ParamWidget>();
+                var w = e.Q<UnconstrainedParamWidget>() as INotifyValueChanged<DesignerSignature>;
                 w.SetValueWithoutNotify(_parameters[i]);
                 w.RegisterValueChangedCallback(RefreshParameter);
             };
             
             _parametersList.unbindItem = (e, _) =>
             {
-                var w = e.Q<ParamWidget>();
+                var w = e.Q<UnconstrainedParamWidget>();
                 w.UnregisterValueChangedCallback(RefreshParameter);
             };
 			
@@ -124,12 +128,12 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Methods
         { 
             MethodName = newValue?.Name ?? string.Empty;
             MethodReturnType = newValue?.Type ?? string.Empty;
-            _parameters = newValue?.Parameters ?? new List<DesignerParameter>();
+            _parameters = newValue?.Parameters ?? new List<DesignerSignature>();
 			
             MarkDirtyRepaint();
         }
 
-        private void RefreshParameter(ChangeEvent<DesignerParameter> parameter)
+        private void RefreshParameter(ChangeEvent<DesignerSignature> parameter)
         {
             int index = _parameters.FindIndex(p => p == parameter.previousValue);
             _parameters[index] = parameter.newValue;

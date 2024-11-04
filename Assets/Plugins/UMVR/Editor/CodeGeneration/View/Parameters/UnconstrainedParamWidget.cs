@@ -14,10 +14,11 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 		private readonly AssistedTextFieldWidget _typeField;
 
 		private static readonly List<Type> _typeLookup;
-		private List<string> _options = new ();
 
 		private volatile int _lastTypeLength;
 		private static readonly Regex _regex = new(@"[+<>]");
+		
+		private DesignerSignature _value;
 		
 		static UnconstrainedParamWidget()
 		{
@@ -51,16 +52,17 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 			
 			DesignerUtility.DesignerViewResources.UnconstrainedParameter.CloneTree(this);
 
-			_options = new List<string>();
 			_typeField = this.Q<AssistedTextFieldWidget>("up-type-field");
-			_typeField.Options = _options;
+			_typeField.Options = new List<string>();
 			_typeField.RegisterValueChangedCallback(OnTypeChanged);
 			
 			_nameField = this.Q<TextField>("up-name-field");
+			_nameField.RegisterValueChangedCallback(evt => value = new DesignerSignature(evt.newValue, ParamType));
 		}
 
 		private void OnTypeChanged(ChangeEvent<string> evt)
 		{
+			value = new DesignerSignature(ParamName, evt.newValue);
 			_typeField.Options.Clear();
 			
 			if (evt.newValue.Length >= _typeField.GracePeriodLength)
@@ -79,13 +81,15 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 
 		public void SetValueWithoutNotify(DesignerSignature newValue)
 		{
+			_value = newValue;
+			
 			_nameField.SetValueWithoutNotify(newValue?.Name ?? string.Empty);
 			_typeField.SetValueWithoutNotify(newValue?.Type ?? string.Empty);
 		}
 
 		public DesignerSignature value
 		{
-			get => new (_nameField.value, _typeField.TextValue);
+			get => _value;
 			set
 			{
 				using var pooled = ChangeEvent<DesignerSignature>.GetPooled(this.value, value);
@@ -99,13 +103,31 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 		public string ParamName
 		{
 			get => _nameField.value;
-			set => _nameField.value = value;
+			set
+			{
+				if (_value == null)
+				{
+					_value = new DesignerSignature(value, string.Empty);
+				}
+				
+				_value.Name = value;
+				_nameField.value = value;
+			}
 		}
-		
+
 		public string ParamType
 		{
 			get => _typeField.TextValue;
-			set => _typeField.TextValue = value;
+			set
+			{
+				if (_value == null)
+				{
+					_value = new DesignerSignature(string.Empty, value);
+				}
+				
+				_value.Type = value;
+				_typeField.TextValue = value;
+			} 
 		}
 		
 		public new class UxmlFactory : UxmlFactory<UnconstrainedParamWidget, UxmlTraits> { }

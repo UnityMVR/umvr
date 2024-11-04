@@ -45,6 +45,8 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.AssistedTextFields
 			set => _input.value = value;
 		}
 
+		public int GracePeriodLength { get; set; }
+
 		public void SetValueWithoutNotify(string newValue)
 		{
 			_input.SetValueWithoutNotify(newValue ?? string.Empty);
@@ -62,8 +64,6 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.AssistedTextFields
 				SendEvent(pooled);
 			}
 		}
-
-		public int GracePeriodLength { get; set; }
         
 		public List<string> Options
 		{
@@ -94,7 +94,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.AssistedTextFields
 				_proposedValues.MarkDirtyRepaint();
 			};
 			
-			_proposedValues.unbindItem = (e, i) =>
+			_proposedValues.unbindItem = (_, _) =>
 			{
 				_proposedValues.MarkDirtyRepaint();
 			};
@@ -116,6 +116,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.AssistedTextFields
 		public new class UxmlTraits : BindableElement.UxmlTraits
 		{
 			private readonly UxmlIntAttributeDescription _gracePeriod = new() { name = "grace-period-length" };
+			private readonly UxmlStringAttributeDescription _textValue = new() { name = "text-value" };
 
 			public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
 			{
@@ -135,6 +136,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.AssistedTextFields
 				}
 
 				param.GracePeriodLength = _gracePeriod.GetValueFromBag(bag, cc);
+				param.TextValue = _textValue.GetValueFromBag(bag, cc);
 			}
 		}
 	}

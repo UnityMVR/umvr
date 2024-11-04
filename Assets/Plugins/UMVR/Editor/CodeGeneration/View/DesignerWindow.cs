@@ -16,7 +16,6 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 		[SerializeField] private VisualTreeAsset _designerWindowUXML;
 		[SerializeField] private VisualTreeAsset _parameterUXML;
 		[SerializeField] private VisualTreeAsset _propertyUXML;
-		[SerializeField] private VisualTreeAsset _methodUXML;
 		
 		private VisualElement _root;
 		private VisualElement _parameter;
@@ -91,14 +90,12 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 
 		private void AddMethod(VisualElement root, DesignerMethod method)
 		{
-			VisualElement element = new VisualElement();
-			_methodUXML.CloneTree(element);
-			root.Insert(root.childCount - 1, element);
+			MethodWidget methodWidget = new MethodWidget(method.Type, method.Name);
+			root.Insert(root.childCount - 1, methodWidget);
 			
-			MethodWidget methodWidget = element.Q<MethodWidget>();
-			methodWidget.RegisterValueChangedCallback(_ => _selectedMethod = method);
+			methodWidget.RegisterValueChangedCallback(_ => { _selectedMethod = method; });
 			methodWidget.Parameters = method.Parameters;
-			_methods.Add(method, element);
+			_methods.Add(method, methodWidget);
 			_selectedMethod = method;
 		}
 
