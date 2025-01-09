@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using pindwin.umvr.Editor.CodeGeneration.Designer;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
@@ -13,11 +12,10 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 		private readonly TextField _nameField;
 		private readonly DropdownField _typeField;
 
+		private DesignerParameter _value;
+		
 		public ParamWidget()
 		{
-			ParamType = nameof(Int32);
-			ParamName = string.Empty;
-			
 			style.flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Row);
 			style.flexGrow = new StyleFloat(1.0f);
 			style.height = new StyleLength(20.0f);
@@ -33,7 +31,11 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 					maxWidth = new StyleLength(new Length(50.0f, LengthUnit.Percent))
 				}
 			};
-			_typeField.RegisterValueChangedCallback(evt => value = new DesignerParameter(ParamName, evt.newValue));
+			
+			_typeField.RegisterValueChangedCallback(evt =>
+			{
+				ParamType = evt.newValue;
+			});
 			
 			Add(_typeField);
 
@@ -46,41 +48,49 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 					maxWidth = new StyleLength(new Length(50.0f, LengthUnit.Percent))
 				}
 			};
-			_nameField.RegisterValueChangedCallback(evt => value = new DesignerParameter(evt.newValue, ParamType));
+			
+			_nameField.RegisterValueChangedCallback(evt =>
+			{
+				ParamName = evt.newValue;
+			});
 			
 			Add(_nameField);
 		}
 
 		public string ParamName
 		{
-			get => _nameField.value;
+			get => _value?.Name ?? string.Empty;
 			set
 			{
 				if (_nameField != null)
 				{
-					_nameField.value = value;
+					_nameField.SetValueWithoutNotify(value);
 				}
+				
+				(this as INotifyValueChanged<DesignerParameter>).value = new DesignerParameter(value, ParamType);
 			}
 		}
 
 		public string ParamType
 		{
-			get => _typeField.value;
+			get => _value?.Type ?? string.Empty;
 			set
 			{
 				if (_typeField != null)
 				{
-					_typeField.value = value;
+					_typeField.SetValueWithoutNotify(value);
 				}
+				
+				(this as INotifyValueChanged<DesignerParameter>).value = new DesignerParameter(ParamName, value);
 			}
 		}
 
-		public DesignerParameter value
+		DesignerParameter INotifyValueChanged<DesignerParameter>.value
 		{
-			get => new (ParamName, ParamType);
+			get => _value;
 			set
 			{
-				using ChangeEvent<DesignerParameter> pooled = ChangeEvent<DesignerParameter>.GetPooled(new DesignerParameter(ParamName, ParamType), value);
+				using ChangeEvent<DesignerParameter> pooled = ChangeEvent<DesignerParameter>.GetPooled(_value, value);
 
 				pooled.target = this;
 				SetValueWithoutNotify(value);
@@ -90,8 +100,7 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Parameters
 
 		public void SetValueWithoutNotify(DesignerParameter newValue)
 		{
-			ParamName = newValue?.Name ?? string.Empty;
-			ParamType = newValue?.Type ?? string.Empty;
+			_value = newValue;
 			
 			MarkDirtyRepaint();
 		}

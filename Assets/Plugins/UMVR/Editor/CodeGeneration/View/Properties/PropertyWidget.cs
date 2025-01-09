@@ -16,27 +16,49 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Properties
         private readonly Toggle _customImplementationToggle;
         private readonly Toggle _genericPropertyToggle;
         
+        private DesignerProperty _value;
+        
         public PropertyWidget()
         {
             DesignerUtility.DesignerViewResources.PropertyUXML.CloneTree(this);
             
-            _paramWidget = this.Q<ParamWidget>("PropertyBlueprint-param-widget");
+            _paramWidget = this.Q<ParamWidget>("PropertyBlueprint-metadata-param");
+            _paramWidget.RegisterValueChangedCallback(evt =>
+            {
+                PropertyName = evt.newValue.Name;
+                PropertyType = evt.newValue.Type;
+            });
+            
             _isCollectionToggle = this.Q<Toggle>("PropertyBlueprint-is-collection-toggle");
             _initializationLevelField = this.Q<DropdownField>("PropertyBlueprint-initialization-level-dropdown");
             _isReadOnlyToggle = this.Q<Toggle>("PropertyBlueprint-is-read-only-toggle");
             _customImplementationToggle = this.Q<Toggle>("PropertyBlueprint-custom-implementation-toggle");
             _genericPropertyToggle = this.Q<Toggle>("PropertyBlueprint-generic-property-toggle");
+            
+            _value = new DesignerProperty();
         }
-        
+
+        private void RefreshValue()
+        {
+            (this as INotifyValueChanged<DesignerProperty>).value = new DesignerProperty(
+                PropertyName, PropertyType, IsCollection, InitializationLevel, IsReadOnly, CustomImplementation,
+                GenericProperty);
+        }
+
         public string PropertyName
         {
             get => _paramWidget?.ParamName;
             set
             {
+                _value ??= new DesignerProperty();
+                
                 if (_paramWidget != null)
                 {
                     _paramWidget.ParamName = value;
                 }
+                
+                _value.Name = value;
+                RefreshValue();
             }
         }
 
@@ -45,10 +67,15 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Properties
             get => _paramWidget?.ParamType;
             set
             {
+                _value ??= new DesignerProperty();
+                
                 if (_paramWidget != null)
                 {
                     _paramWidget.ParamType = value;
                 }
+                
+                _value.Type = value;
+                RefreshValue();
             }
         }
 
@@ -114,18 +141,11 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Properties
 
         DesignerProperty INotifyValueChanged<DesignerProperty>.value
         {
-            get => new (PropertyType, PropertyName, IsCollection, InitializationLevel, IsReadOnly, CustomImplementation, GenericProperty);
+            get => _value;
             set
             {
                 using ChangeEvent<DesignerProperty> pooled = ChangeEvent<DesignerProperty>.GetPooled(
-                    new DesignerProperty(
-                        PropertyType, 
-                        PropertyName, 
-                        IsCollection, 
-                        InitializationLevel, 
-                        IsReadOnly, 
-                        CustomImplementation, 
-                        GenericProperty), 
+                    _value, 
                     value);
 
                 pooled.target = this;
@@ -136,6 +156,8 @@ namespace pindwin.umvr.Editor.CodeGeneration.View.Properties
 
         public void SetValueWithoutNotify(DesignerProperty newValue)
         {
+            _value = newValue;
+            
             PropertyName = newValue?.Name ?? string.Empty;
             PropertyType = newValue?.Type ?? string.Empty;
             IsCollection = newValue?.IsCollection ?? false;

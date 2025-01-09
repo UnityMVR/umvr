@@ -14,8 +14,6 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 	public class DesignerWindow : EditorWindow
 	{
 		[SerializeField] private VisualTreeAsset _designerWindowUXML;
-		[SerializeField] private VisualTreeAsset _parameterUXML;
-		[SerializeField] private VisualTreeAsset _propertyUXML;
 		
 		private VisualElement _root;
 		private VisualElement _parameter;
@@ -42,34 +40,38 @@ namespace pindwin.umvr.Editor.CodeGeneration.Window
 			labelFromUXML.style.flexGrow = new StyleFloat(1);
 			_root.Add(labelFromUXML);
 
-			InitializeListView<DesignerParameter, ParamWidget>(_parameterUXML, "ParamsList");
-			InitializeListView<DesignerProperty, PropertyWidget>(_propertyUXML, "PropertiesList", 100);
+			InitializeListView<DesignerSignature, UnconstrainedParamWidget>(() => new UnconstrainedParamWidget(), "ParamsList");
+			InitializeListView<DesignerProperty, PropertyWidget>(() => new PropertyWidget(), "PropertiesList", 100);
 			
 			VisualElement methodsRoot = _root.Q<VisualElement>("MethodsGroup");
 			InitializeButton("MethodsAddButton", () => AddMethod(methodsRoot, new DesignerMethod($"Method{_methods.Count}", "void")));
 			InitializeButton("MethodsRemoveButton", () => RemoveMethod(methodsRoot, _selectedMethod));
 		}
 
-		private void InitializeListView<TElementType, TWidgetType>(VisualTreeAsset elementUXML, string listElementName, float height = 20.0f, Action<TWidgetType> initAction = null) 
+		private void InitializeListView<TElementType, TWidgetType>(Func<VisualElement> itemFactoryMethod, string listElementName, float height = 20.0f) 
 			where TWidgetType : VisualElement, INotifyValueChanged<TElementType>
 		{
 			var itemsSource = new List<TElementType>();
 			var elementsRoot = _root.Q<ListView>(listElementName);
 			elementsRoot.showAddRemoveFooter = true;
+			elementsRoot.reorderable = true;
 			elementsRoot.itemsSource = itemsSource;
-			elementsRoot.makeItem = () =>
-			{
-				VisualElement element = new VisualElement();
-				elementUXML.CloneTree(element);
-				element.style.flexGrow = new StyleFloat(1);
-				return element;
-			};
+			elementsRoot.makeItem = itemFactoryMethod;
+			elementsRoot.selectionType = SelectionType.Single;
+			elementsRoot.showBoundCollectionSize = false;
 
 			elementsRoot.bindItem = (e, i) =>
 			{
 				var w = e.Q<TWidgetType>();
 				w.SetValueWithoutNotify(itemsSource[i]);
-				initAction?.Invoke(w);
+				Debug.Log($"bind {i} {itemsSource[i]}");
+				w.RegisterValueChangedCallback(_ => itemsSource[i] = w.value);
+				itemsSource[i] = w.value;
+			};
+			
+			elementsRoot.unbindItem = (e, i) =>
+			{
+				Debug.Log($"unbind {i} {itemsSource[i]}");
 			};
 			
 			elementsRoot.fixedItemHeight = height;

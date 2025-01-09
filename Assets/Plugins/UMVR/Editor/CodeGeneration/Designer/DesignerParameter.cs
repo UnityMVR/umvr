@@ -8,6 +8,9 @@
 			Name = name;
 		}
 		
+		public DesignerParameter() : this(string.Empty, string.Empty)
+		{ }
+		
 		public string Type { get; set; }
 		public string Name { get; set; }
 	}
