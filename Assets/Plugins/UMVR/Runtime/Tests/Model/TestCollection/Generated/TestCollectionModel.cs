@@ -25,7 +25,14 @@ namespace Model.TestCollection
 		public TestCollectionModel(pindwin.umvr.Model.Id id) : base(id)
 		{
 			_collection = new ModelCollectionProperty<Model.TestModel.ITestModel>(nameof(Collection));
-			Collection = default;
+			Disposing += _ => 
+			{
+				for (int i = Collection.Count; i >= 0; i--)
+				{
+					Collection[i].Dispose();
+				}
+				_collection?.Dispose();
+			};
 
 			RegisterDataStreams(this);
 		}

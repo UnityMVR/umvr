@@ -66,9 +66,9 @@
 #>
 			Disposing += _ => 
 			{
-				foreach (var item in <#= prop.Name #>)
+				for (int i = <#= prop.Name #>.Count; i >= 0; i--)
 				{
-					item.Dispose();
+					<#= prop.Name #>[i].Dispose();
 				}
 				<#= prop.CustomImplementation ? "// No cascade dispose because of custom implementation" : $"{(prop.IsReadonly ? prop.Name : prop.FieldName)}?.Dispose();"#>
 			};
