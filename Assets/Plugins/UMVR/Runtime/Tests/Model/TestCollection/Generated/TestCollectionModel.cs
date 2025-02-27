@@ -27,7 +27,7 @@ namespace Model.TestCollection
 			_collection = new ModelCollectionProperty<Model.TestModel.ITestModel>(nameof(Collection));
 			Disposing += _ => 
 			{
-				for (int i = Collection.Count; i >= 0; i--)
+				for (int i = Collection.Count - 1; i >= 0; i--)
 				{
 					Collection[i].Dispose();
 				}

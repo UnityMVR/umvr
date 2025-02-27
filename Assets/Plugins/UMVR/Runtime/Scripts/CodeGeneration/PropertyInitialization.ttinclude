@@ -66,7 +66,7 @@
 #>
 			Disposing += _ => 
 			{
-				for (int i = <#= prop.Name #>.Count; i >= 0; i--)
+				for (int i = <#= prop.Name #>.Count - 1; i >= 0; i--)
 				{
 					<#= prop.Name #>[i].Dispose();
 				}
