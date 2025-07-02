@@ -18,6 +18,18 @@ namespace pindwin.umvr.Model
 		private static int incrementalId;
 		private static int _appRunSignature;
 		
+		public static int AppRunSignature
+		{
+			get => _appRunSignature;
+			set => _appRunSignature = value;
+		}
+		
+		public static int IncrementalId
+		{
+			get => incrementalId;
+			set => incrementalId = value;
+		}
+		
 		static Id()
 		{
 #if UNITY_EDITOR
