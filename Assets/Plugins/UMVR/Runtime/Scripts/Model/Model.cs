@@ -51,7 +51,7 @@ namespace pindwin.umvr.Model
 
 		public Property GetProperty(string label)
 		{
-			label = label.ToLower();
+			label = label.ToLowerInvariant();
 			
 			if (_observables.TryGetValue(label, out Property single))
 			{
@@ -157,7 +157,7 @@ namespace pindwin.umvr.Model
 					continue;
 				}
 
-				result[fieldInfo.Name.ToLower().TrimStart('_')] =
+				result[fieldInfo.Name.ToLowerInvariant().TrimStart('_')] =
 					fieldInfo.GetValue(model) as Property ?? 
 					throw new UMVRDataBindingException(t, fieldInfo.Name, typeof(TModel));
 			}

@@ -1,7 +1,7 @@
 {
     "name": "com.pindwin.umvr",
     "displayName": "UMVR Framework",
-    "version": "0.0.1",
+    "version": "0.0.1.1",
     "unity": "2021.3",
     "type": "tool",
     "description": "Utility framework implementing Model-View-Reactor design pattern.",
