@@ -3,7 +3,7 @@ using UniRx;
 
 namespace pindwin.umvr.Model
 {
-	public sealed class ModelCollectionProperty<TModel> : CollectionProperty<TModel>
+	public class ModelCollectionProperty<TModel> : CollectionProperty<TModel>
 		where TModel : class, IModel
 	{
 		public ModelCollectionProperty(string label)
